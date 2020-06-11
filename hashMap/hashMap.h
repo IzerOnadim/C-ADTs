@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #ifndef HASH_H
 #define HASH_H
 
@@ -45,6 +47,5 @@ bool hash_contains(HashMap_t *hash, char *key);
  * removed and false if key not found.
  */
 bool hash_remove(HashMap_t *hash, char *key);
-
 
 #endif
