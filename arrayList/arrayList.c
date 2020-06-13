@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+static bool doubleCapacityIfNeeded(ArrayList_t *list);
+static void checkBounds(ArrayList_t *list, int index);
+
 ArrayList_t *arrayListCreate(void) {
   
   ArrayList_t *list = (ArrayList_t *) malloc(sizeof(ArrayList_t));
@@ -18,7 +21,6 @@ ArrayList_t *arrayListCreate(void) {
 }
 
 void arrayListFree(ArrayList_t *list) {
-  
   free(list->array);
   list->array = NULL;
   free(list);
@@ -27,11 +29,7 @@ void arrayListFree(ArrayList_t *list) {
 
 bool arrayListAppend(ArrayList_t *list, int elem) {
   
-  if (list->length >= list->size) {
-    list->size *= 2;
-    list->array = (int *) realloc(list->array, list->size * sizeof(int));
-    if (!list->array) return false;
-  }
+  if (!doubleCapacityIfNeeded(list)) return false;
 
   (list->array)[list->length] = elem;
   list->length++;
@@ -41,16 +39,12 @@ bool arrayListAppend(ArrayList_t *list, int elem) {
 
 int arrayListRemove(ArrayList_t *list, int index) {
   
-  if (index < 0 || index >= list->length) {
-    fprintf(stderr, "Out of bounds array list access.");
-    exit(EXIT_FAILURE);
-  }
-  
+  checkBounds(list, index); // May throw error; 
+
   int value = (list->array)[index];
   
-  for (int i = index; i < list->length; i++) {
+  for (int i = index; i < list->length; i++)
     (list->array)[i] = (list->array)[i+1];
-  }
 
   list->length--;
   
@@ -84,14 +78,44 @@ bool arrayListEquals(ArrayList_t *one, ArrayList_t *two) {
 }
 
 int arrayListGet(ArrayList_t *list, int index) {
+  checkBounds(list, index); // May throw error; 
+  return (list->array)[index];
+}
+
+bool arrayListInsert(ArrayList_t *list, int index, int elem) {
   
+  if (index > list->length) return false;
+
+  if (index == list->length) return arrayListAppend(list, elem); 
+  
+  if (!doubleCapacityIfNeeded(list)) return false;
+  
+  list->length++;
+  for (int i = index; i < list->length; i++)
+    (list->array)[i+1] = (list->array)[i]; 
+
+  (list->array)[index] = elem; 
+
+  return true;
+}
+
+void arrayListClear(ArrayList_t *list) {
+  list->length = 0;
+}
+
+static void checkBounds(ArrayList_t *list, int index) {
   if (index < 0 || index >= list->length) {
     fprintf(stderr, "Out of bounds array list access.");
     exit(EXIT_FAILURE);
   }
-  
-  return (list->array)[index];
 }
 
-bool arrayListInsert(ArrayList_t *list, int index, int elem);  
+static bool doubleCapacityIfNeeded(ArrayList_t *list) {
+  if (list->length >= list->size) {
+    list->size *= 2;
+    list->array = (int *) realloc(list->array, list->size * sizeof(int));
+    if (!list->array) return false;
+  }
+  return true;
+}
 

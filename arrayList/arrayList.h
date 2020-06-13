@@ -63,4 +63,9 @@ int arrayListGet(ArrayList_t *list, int index);
  */
 bool arrayListInsert(ArrayList_t *list, int index, int elem); 
 
+/*
+ * Clears / empties array list, without changing capacity.
+ */
+void arrayListClear(ArrayList_t *list);
+
 #endif
