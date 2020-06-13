@@ -68,4 +68,10 @@ bool arrayListInsert(ArrayList_t *list, int index, int elem);
  */
 void arrayListClear(ArrayList_t *list);
 
+/*
+ * Returns the index of the first occurence of an element,
+ * Returns the length of list if no occurence of element.
+ */
+int arrayListIndexOf(ArrayList_t *list, int elem);
+
 #endif

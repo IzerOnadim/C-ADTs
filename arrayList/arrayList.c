@@ -103,6 +103,17 @@ void arrayListClear(ArrayList_t *list) {
   list->length = 0;
 }
 
+int arrayListIndexOf(ArrayList_t *list, int elem) {
+
+  for (int i = 0; i < list->length; i++) 
+    if ((list->array)[i] == elem) return i;
+  
+  return list->length;
+}
+
+/*
+ * Causes error if an index is out of bounds.
+ */
 static void checkBounds(ArrayList_t *list, int index) {
   if (index < 0 || index >= list->length) {
     fprintf(stderr, "Out of bounds array list access.");
@@ -110,6 +121,9 @@ static void checkBounds(ArrayList_t *list, int index) {
   }
 }
 
+/*
+ * double size of array if out of space. 
+ */
 static bool doubleCapacityIfNeeded(ArrayList_t *list) {
   if (list->length >= list->size) {
     list->size *= 2;
