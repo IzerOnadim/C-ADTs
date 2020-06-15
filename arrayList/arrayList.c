@@ -7,7 +7,7 @@
 static bool doubleCapacityIfNeeded(ArrayList_t *list);
 static void checkBounds(ArrayList_t *list, int index);
 
-ArrayList_t *arrayListCreate(void) {
+ArrayList_t *createArrayList(void) {
   
   ArrayList_t *list = (ArrayList_t *) malloc(sizeof(ArrayList_t));
   if (!list) return NULL;
@@ -20,14 +20,16 @@ ArrayList_t *arrayListCreate(void) {
   return list;
 }
 
-void arrayListFree(ArrayList_t *list) {
+ArrayList_t *initArrayList(int *array, int size);
+
+void freeArrayList(ArrayList_t *list) {
   free(list->array);
   list->array = NULL;
   free(list);
   list = NULL;
 }
 
-bool arrayListAppend(ArrayList_t *list, int elem) {
+bool appendArrayList(ArrayList_t *list, int elem) {
   
   if (!doubleCapacityIfNeeded(list)) return false;
 
@@ -37,7 +39,7 @@ bool arrayListAppend(ArrayList_t *list, int elem) {
   return true; 
 }
 
-int arrayListRemove(ArrayList_t *list, int index) {
+int removeArrayList(ArrayList_t *list, int index) {
   
   checkBounds(list, index); // May throw error; 
 
@@ -51,15 +53,15 @@ int arrayListRemove(ArrayList_t *list, int index) {
   return value;  
 }
 
-bool arrayListIsEmpty(ArrayList_t *list) {
+bool isEmptyArrayList(ArrayList_t *list) {
   return list->length == 0;
 }
 
-int arrayListLength(ArrayList_t *list) {
+int lengthArrayList(ArrayList_t *list) {
   return list->length;
 }
 
-bool arrayListContains(ArrayList_t *list, int elem) {
+bool containsArrayList(ArrayList_t *list, int elem) {
   
   for (int i = 0; i < list->length; i++)
     if ((list->array)[i] == elem) return true;
@@ -67,7 +69,7 @@ bool arrayListContains(ArrayList_t *list, int elem) {
   return false;
 }
 
-bool arrayListEquals(ArrayList_t *one, ArrayList_t *two) {
+bool equalsArrayList(ArrayList_t *one, ArrayList_t *two) {
   
   if (one->length != two->length) return false;
 
@@ -77,16 +79,16 @@ bool arrayListEquals(ArrayList_t *one, ArrayList_t *two) {
   return true;
 }
 
-int arrayListGet(ArrayList_t *list, int index) {
+int getArrayList(ArrayList_t *list, int index) {
   checkBounds(list, index); // May throw error; 
   return (list->array)[index];
 }
 
-bool arrayListInsert(ArrayList_t *list, int index, int elem) {
+bool insertArrayList(ArrayList_t *list, int index, int elem) {
   
   if (index > list->length) return false;
 
-  if (index == list->length) return arrayListAppend(list, elem); 
+  if (index == list->length) return appendArrayList(list, elem); 
   
   if (!doubleCapacityIfNeeded(list)) return false;
   
@@ -99,17 +101,27 @@ bool arrayListInsert(ArrayList_t *list, int index, int elem) {
   return true;
 }
 
-void arrayListClear(ArrayList_t *list) {
+void clearArrayList(ArrayList_t *list) {
   list->length = 0;
 }
 
-int arrayListIndexOf(ArrayList_t *list, int elem) {
+int indexOfArrayList(ArrayList_t *list, int elem) {
 
   for (int i = 0; i < list->length; i++) 
     if ((list->array)[i] == elem) return i;
   
   return -1;
 }
+
+bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two);
+
+ArrayList_t *cloneArrayList(ArrayList_t *list);
+
+ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end);
+
+int *arrayListToArray(ArrayList_t *list);
+
+char *arrayListToString(ArrayList_t *list);
 
 /*
  * Causes error if an index is out of bounds.
