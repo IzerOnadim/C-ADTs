@@ -70,7 +70,7 @@ void arrayListClear(ArrayList_t *list);
 
 /*
  * Returns the index of the first occurence of an element,
- * Returns the length of list if no occurence of element.
+ * Returns the -1 if no occurence of element.
  */
 int arrayListIndexOf(ArrayList_t *list, int elem);
 

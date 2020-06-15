@@ -125,6 +125,18 @@ int main(void) {
   testbool(arrayListContains(list, 3), "Test 45");
   testbool(arrayListRemove(list, 0) == 3, "Test 46");
 
+  printf("\n---------insert tests--------------------------------\n\n");
+  arrayListAppend(list, 0);
+  arrayListAppend(list, 1);
+  arrayListAppend(list, 2);
+  testbool(arrayListIndexOf(list, 0) == 0, "Test 47"); 
+  testbool(arrayListIndexOf(list, 1) == 1, "Test 48"); 
+  testbool(arrayListIndexOf(list, 2) == 2, "Test 49"); 
+  testbool(arrayListIndexOf(list, 9) == -1, "Test 50"); 
+  testbool(arrayListIndexOf(list, 8) == -1, "Test 51"); 
+  arrayListClear(list); 
+  testbool(arrayListIndexOf(list, 0) == -1, "Test 52");
+
   printf("\n------------------------------------------------------\n");
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   arrayListFree(list);

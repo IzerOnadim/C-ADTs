@@ -108,7 +108,7 @@ int arrayListIndexOf(ArrayList_t *list, int elem) {
   for (int i = 0; i < list->length; i++) 
     if ((list->array)[i] == elem) return i;
   
-  return list->length;
+  return -1;
 }
 
 /*
