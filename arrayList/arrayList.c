@@ -4,23 +4,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+static ArrayList_t *newArrayList(int size);
 static bool doubleCapacityIfNeeded(ArrayList_t *list);
 static void checkBounds(ArrayList_t *list, int index);
 
 ArrayList_t *createArrayList(void) {
+  return newArrayList(0);
+}
+
+ArrayList_t *initArrayList(int *array, int size) {
   
-  ArrayList_t *list = (ArrayList_t *) malloc(sizeof(ArrayList_t));
+  ArrayList_t *list = newArrayList(size);
   if (!list) return NULL;
 
-  list->size = 1;
-  list->length = 0;
-  list->array = (int *) calloc(list->size, sizeof(int));
-  if (!list->array) return NULL;
+  for (int i = 0; i < size; i++)
+    if (!appendArrayList(list, array[size])) return NULL;
 
   return list;
 }
-
-ArrayList_t *initArrayList(int *array, int size);
 
 void freeArrayList(ArrayList_t *list) {
   free(list->array);
@@ -31,6 +32,7 @@ void freeArrayList(ArrayList_t *list) {
 
 bool appendArrayList(ArrayList_t *list, int elem) {
   
+  //False from doubleCapacityIfNeeded means alloc failed.
   if (!doubleCapacityIfNeeded(list)) return false;
 
   (list->array)[list->length] = elem;
@@ -41,7 +43,7 @@ bool appendArrayList(ArrayList_t *list, int elem) {
 
 int removeArrayList(ArrayList_t *list, int index) {
   
-  checkBounds(list, index); // May throw error; 
+  checkBounds(list, index); //May produce an error.
 
   int value = (list->array)[index];
   
@@ -122,6 +124,23 @@ ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end);
 int *arrayListToArray(ArrayList_t *list);
 
 char *arrayListToString(ArrayList_t *list);
+
+/*
+ * Creates empty arrayList with given size.
+ * Returns NULL if allocation fails.
+ */
+static ArrayList_t *newArrayList(int size) {
+
+  ArrayList_t *list = (ArrayList_t *) malloc(sizeof(ArrayList_t));
+  if (!list) return NULL;
+
+  list->size = size + 1;
+  list->length = size;
+  list->array = (int *) calloc(list->size, sizeof(int));
+  if (!list->array) return NULL;
+  
+  return list;
+}
 
 /*
  * Causes error if an index is out of bounds.
