@@ -1,6 +1,7 @@
 #include "arrayList.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -11,6 +12,13 @@ void testbool(bool condition, char *testname) {
   printf("%s: %s\n", testname, condition ?  
       ANSI_COLOR_GREEN "OK"  ANSI_COLOR_RESET :
       ANSI_COLOR_RED  "FAIL" ANSI_COLOR_RESET); 
+}
+
+bool equalArrays(int *one, int *two, int size) {
+  for (int i = 0; i < size; i++)
+    if (one[i] != two[i]) return false;
+
+  return true;
 }
 
 int main(void) {
@@ -140,19 +148,28 @@ int main(void) {
   printf("\n---------init tests----------------------------------\n\n");
   int arr[] = {1, 2, 3, 4, 5};
   ArrayList_t *another = initArrayList(arr, 5);
-  testbool(containsArrayList(another, 1), "Test53");
-  testbool(containsArrayList(another, 2), "Test54");
-  testbool(containsArrayList(another, 3), "Test55");
-  testbool(containsArrayList(another, 4), "Test56");
-  testbool(containsArrayList(another, 5), "Test57");
-  testbool(!containsArrayList(another, 0), "Test58");
-  testbool(!containsArrayList(another, 6), "Test59");
-  testbool(!containsArrayList(another, 8), "Test60");
+  testbool(containsArrayList(another, 1), "Test 53");
+  testbool(containsArrayList(another, 2), "Test 54");
+  testbool(containsArrayList(another, 3), "Test 55");
+  testbool(containsArrayList(another, 4), "Test 56");
+  testbool(containsArrayList(another, 5), "Test 57");
+  testbool(!containsArrayList(another, 0), "Test 58");
+  testbool(!containsArrayList(another, 6), "Test 59");
+  testbool(!containsArrayList(another, 8), "Test 60");
+
+  printf("\n---------to array tests------------------------------\n\n");
+  int *newArr = arrayListToArray(another);
+  testbool(equalArrays(arr, newArr, another->length), "Test 61");
+  int arr1[1];
+  int *arr2 = arrayListToArray(list);
+  testbool(equalArrays(arr1, arr2, list->length), "Test 62");
 
   printf("\n------------------------------------------------------\n");
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   freeArrayList(list);
   freeArrayList(other);
-  freeArrayList(another); 
+  freeArrayList(another);
+  free(newArr);
+  free(arr2); 
   printf("\n------------------------------------------------------\n\n");
 }

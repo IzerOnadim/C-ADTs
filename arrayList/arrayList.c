@@ -77,7 +77,7 @@ bool equalsArrayList(ArrayList_t *one, ArrayList_t *two) {
 
   for (int i = 0; i < one->length; i++)
     if ((one->array)[i] != (two->array)[i]) return false;
-  
+
   return true;
 }
 
@@ -109,9 +109,9 @@ void clearArrayList(ArrayList_t *list) {
 
 int indexOfArrayList(ArrayList_t *list, int elem) {
 
-  for (int i = 0; i < list->length; i++) 
+  for (int i = 0; i < list->length; i++)
     if ((list->array)[i] == elem) return i;
-  
+
   return -1;
 }
 
@@ -121,7 +121,14 @@ ArrayList_t *cloneArrayList(ArrayList_t *list);
 
 ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end);
 
-int *arrayListToArray(ArrayList_t *list);
+int *arrayListToArray(ArrayList_t *list) {
+  int *arr = (int *) calloc(list->length, sizeof(int));
+
+  for (int i = 0; i < list->length; i++)
+    arr[i] = (list->array)[i];
+
+  return arr;
+}
 
 char *arrayListToString(ArrayList_t *list);
 

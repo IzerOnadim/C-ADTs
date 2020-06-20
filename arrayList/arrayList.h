@@ -108,6 +108,8 @@ int *arrayListToArray(ArrayList_t *list);
 
 /*
  * Returns string representing ArrayList in form [0, 1, 2, 3].
+ * String is dynamically allocated and must be free. 
+ * Null returned if alloc fails.
  * Size of string will be 3 * length of ArrayList due to [ ,] chars.
  */
 char *arrayListToString(ArrayList_t *list);
