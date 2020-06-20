@@ -18,7 +18,7 @@ ArrayList_t *initArrayList(int *array, int size) {
   if (!list) return NULL;
 
   for (int i = 0; i < size; i++)
-    if (!appendArrayList(list, array[size])) return NULL;
+    if (!appendArrayList(list, array[i])) return NULL;
 
   return list;
 }
@@ -135,7 +135,7 @@ static ArrayList_t *newArrayList(int size) {
   if (!list) return NULL;
 
   list->size = size + 1;
-  list->length = size;
+  list->length = 0;
   list->array = (int *) calloc(list->size, sizeof(int));
   if (!list->array) return NULL;
   

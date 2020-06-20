@@ -125,7 +125,7 @@ int main(void) {
   testbool(containsArrayList(list, 3), "Test 45");
   testbool(removeArrayList(list, 0) == 3, "Test 46");
 
-  printf("\n---------insert tests--------------------------------\n\n");
+  printf("\n---------index of tests------------------------------\n\n");
   appendArrayList(list, 0);
   appendArrayList(list, 1);
   appendArrayList(list, 2);
@@ -137,9 +137,22 @@ int main(void) {
   clearArrayList(list); 
   testbool(indexOfArrayList(list, 0) == -1, "Test 52");
 
+  printf("\n---------init tests----------------------------------\n\n");
+  int arr[] = {1, 2, 3, 4, 5};
+  ArrayList_t *another = initArrayList(arr, 5);
+  testbool(containsArrayList(another, 1), "Test53");
+  testbool(containsArrayList(another, 2), "Test54");
+  testbool(containsArrayList(another, 3), "Test55");
+  testbool(containsArrayList(another, 4), "Test56");
+  testbool(containsArrayList(another, 5), "Test57");
+  testbool(!containsArrayList(another, 0), "Test58");
+  testbool(!containsArrayList(another, 6), "Test59");
+  testbool(!containsArrayList(another, 8), "Test60");
+
   printf("\n------------------------------------------------------\n");
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   freeArrayList(list);
-  freeArrayList(other); 
+  freeArrayList(other);
+  freeArrayList(another); 
   printf("\n------------------------------------------------------\n\n");
 }
