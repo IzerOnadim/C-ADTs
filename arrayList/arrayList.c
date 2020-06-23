@@ -1,8 +1,11 @@
-#include "arrayList.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
+
+#include "arrayList.h"
+
+#define EMPTY_BRACKETS_LENGTH (2)
 
 static ArrayList_t *newArrayList(int size);
 static bool doubleCapacityIfNeeded(ArrayList_t *list);
@@ -130,7 +133,25 @@ int *arrayListToArray(ArrayList_t *list) {
   return arr;
 }
 
-char *arrayListToString(ArrayList_t *list);
+char *arrayListToString(ArrayList_t *list) {
+  if (!list) return NULL;
+  
+  int strLen = (list->length == 0) ? EMPTY_BRACKETS_LENGTH : list->length * 3;
+  char *str = (char *) calloc(strLen, sizeof(char));
+
+  strcat(str, "[");
+  
+  for (int i = 0; i < list->length; i++) {
+    char num[3];
+    sprintf(num, "%s%d%s", i == 0 ? "" : " ", (list->array)[i], 
+        i < list->length - 1 ? "," : ""); 
+    strcat(str, num);
+  } 
+  
+  strcat(str, "]"); 
+
+  return str;
+}
 
 /*
  * Creates empty arrayList with given size.

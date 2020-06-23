@@ -1,17 +1,19 @@
-#include "arrayList.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
+
+#include "arrayList.h"
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-void testbool(bool condition, char *testname) {
+bool testbool(bool condition, char *testname) {
   printf("%s: %s\n", testname, condition ?  
       ANSI_COLOR_GREEN "OK"  ANSI_COLOR_RESET :
-      ANSI_COLOR_RED  "FAIL" ANSI_COLOR_RESET); 
+      ANSI_COLOR_RED  "FAIL" ANSI_COLOR_RESET);
+ return condition; 
 }
 
 bool equalArrays(int *one, int *two, int size) {
@@ -19,6 +21,14 @@ bool equalArrays(int *one, int *two, int size) {
     if (one[i] != two[i]) return false;
 
   return true;
+}
+
+void printArray(int *arr, int size) {
+  printf("[");
+  for (int i = 0; i < size; i++) {
+    printf("%s%d%s", i == 0 ? "" : " ", arr[i], i < size - 1 ? "," : "");
+  }
+  printf("]\n");
 }
 
 int main(void) {
@@ -164,6 +174,20 @@ int main(void) {
   int *arr2 = arrayListToArray(list);
   testbool(equalArrays(arr1, arr2, list->length), "Test 62");
 
+  printf("\n---------to string tests-----------------------------\n\n");
+  printf("Test 63:\n  Expected: ");
+  printArray(newArr, another->length);
+  char *strTest = arrayListToString(another);
+  printf("  Actual:   %s\n", strTest); 
+
+  clearArrayList(another);
+  char expected[] = "[]";
+  char *actual = arrayListToString(another);
+  if (!testbool(!strncmp(actual, expected, 3), "Test 64")) {
+    printf("Expected: %s\n", expected);
+    printf("Actual:   %s\n", actual); 
+  }
+
   printf("\n------------------------------------------------------\n");
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   freeArrayList(list);
@@ -171,5 +195,7 @@ int main(void) {
   freeArrayList(another);
   free(newArr);
   free(arr2); 
+  free(strTest);
+  free(actual);
   printf("\n------------------------------------------------------\n\n");
 }
