@@ -10,6 +10,7 @@
 static ArrayList_t *newArrayList(int size);
 static bool doubleCapacityIfNeeded(ArrayList_t *list);
 static void checkBounds(ArrayList_t *list, int index);
+static void checkNullPointer(ArrayList_t *list);
 
 ArrayList_t *createArrayList(void) {
   return newArrayList(0);
@@ -17,6 +18,8 @@ ArrayList_t *createArrayList(void) {
 
 ArrayList_t *initArrayList(int *array, int size) {
   
+  if (!array) return NULL;
+
   ArrayList_t *list = newArrayList(size);
   if (!list) return NULL;
 
@@ -27,6 +30,7 @@ ArrayList_t *initArrayList(int *array, int size) {
 }
 
 void freeArrayList(ArrayList_t *list) {
+  if (!list) return;
   free(list->array);
   list->array = NULL;
   free(list);
@@ -34,6 +38,8 @@ void freeArrayList(ArrayList_t *list) {
 }
 
 bool appendArrayList(ArrayList_t *list, int elem) {
+  
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   
   //False from doubleCapacityIfNeeded means alloc failed.
   if (!doubleCapacityIfNeeded(list)) return false;
@@ -46,6 +52,7 @@ bool appendArrayList(ArrayList_t *list, int elem) {
 
 int removeArrayList(ArrayList_t *list, int index) {
   
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   checkBounds(list, index); //May produce an error.
 
   int value = (list->array)[index];
@@ -59,14 +66,18 @@ int removeArrayList(ArrayList_t *list, int index) {
 }
 
 bool isEmptyArrayList(ArrayList_t *list) {
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   return list->length == 0;
 }
 
 int lengthArrayList(ArrayList_t *list) {
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   return list->length;
 }
 
 bool containsArrayList(ArrayList_t *list, int elem) {
+  
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   
   for (int i = 0; i < list->length; i++)
     if ((list->array)[i] == elem) return true;
@@ -75,6 +86,8 @@ bool containsArrayList(ArrayList_t *list, int elem) {
 }
 
 bool equalsArrayList(ArrayList_t *one, ArrayList_t *two) {
+  
+  checkNullPointer(one); checkNullPointer(two); 
   
   if (one->length != two->length) return false;
 
@@ -85,11 +98,14 @@ bool equalsArrayList(ArrayList_t *one, ArrayList_t *two) {
 }
 
 int getArrayList(ArrayList_t *list, int index) {
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   checkBounds(list, index); // May throw error; 
   return (list->array)[index];
 }
 
 bool insertArrayList(ArrayList_t *list, int index, int elem) {
+  
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   
   if (index > list->length) return false;
 
@@ -107,11 +123,14 @@ bool insertArrayList(ArrayList_t *list, int index, int elem) {
 }
 
 void clearArrayList(ArrayList_t *list) {
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   list->length = 0;
 }
 
 int indexOfArrayList(ArrayList_t *list, int elem) {
 
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
+  
   for (int i = 0; i < list->length; i++)
     if ((list->array)[i] == elem) return i;
 
@@ -125,6 +144,9 @@ ArrayList_t *cloneArrayList(ArrayList_t *list);
 ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end);
 
 int *arrayListToArray(ArrayList_t *list) {
+  
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
+  
   int *arr = (int *) calloc(list->length, sizeof(int));
 
   for (int i = 0; i < list->length; i++)
@@ -134,7 +156,8 @@ int *arrayListToArray(ArrayList_t *list) {
 }
 
 char *arrayListToString(ArrayList_t *list) {
-  if (!list) return NULL;
+  
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
   
   int strLen = (list->length == 0) ? EMPTY_BRACKETS_LENGTH : list->length * 3;
   char *str = (char *) calloc(strLen, sizeof(char));
@@ -174,6 +197,9 @@ static ArrayList_t *newArrayList(int size) {
  * Causes error if an index is out of bounds.
  */
 static void checkBounds(ArrayList_t *list, int index) {
+  
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
+  
   if (index < 0 || index >= list->length) {
     fprintf(stderr, "Out of bounds array list access.");
     exit(EXIT_FAILURE);
@@ -184,11 +210,24 @@ static void checkBounds(ArrayList_t *list, int index) {
  * double size of array if out of space. 
  */
 static bool doubleCapacityIfNeeded(ArrayList_t *list) {
+ 
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
+  
   if (list->length >= list->size) {
     list->size *= 2;
     list->array = (int *) realloc(list->array, list->size * sizeof(int));
     if (!list->array) return false;
   }
   return true;
+}
+
+/*
+ * Gives error if pointer is NULL.
+ */
+static void checkNullPointer(ArrayList_t *list) {
+  if (!list) {
+    fprintf(stderr, "Null pointer given.");
+    exit(EXIT_FAILURE);
+  }
 }
 

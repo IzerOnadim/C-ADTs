@@ -17,7 +17,7 @@ ArrayList_t *createArrayList(void);
 
 /*
  * Creats and initialises arrayList with a given array.
- * Returns NULL if allocation fails.
+ * Returns NULL if allocation fails or if given pointer is NULL.
  */
 ArrayList_t *initArrayList(int *array, int size);
 
