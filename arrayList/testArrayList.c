@@ -238,7 +238,7 @@ int main(void) {
   }
 
   printf("\n-----------------------SUMMARY-----------------------\n");
-  printf("\nTests Ran: %d\nPassed: %d\nFailed %d\n", 
+  printf("\nNo. Tests: %d\nPassed:    %d\nFailed:    %d\n", 
       NUM_TESTS, NUM_TESTS - TESTS_FAILED, TESTS_FAILED);
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   freeArrayList(list);
