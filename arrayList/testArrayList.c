@@ -207,6 +207,27 @@ int main(void) {
   testTrue(containsArrayList(clonedList1, 4), "Test 72");
   testTrue(!containsArrayList(clonedList1, 0), "Test 73");
   testTrue(!containsArrayList(clonedList1, 5), "Test 74");
+  testEquals(lengthArrayList(clonedList1), 4, "Test 75");
+  char expected1[] = "[1, 2, 3, 4]";
+  char *actual1 = arrayListToString(clonedList1);
+  if (!testTrue(!strcmp(actual1, expected1), "Test 76")) {
+    printf("Expected: %s\n", expected1);
+    printf("Actual:   %s\n", actual1); 
+  }
+
+  printf("\n---------cloneArrayList tests------------------------\n\n");
+  ArrayList_t *subList = subListArrayList(list, 1, 3); 
+  testEquals(lengthArrayList(subList), 2, "Test 77");
+  testTrue(containsArrayList(subList, 2), "Test 78");
+  testTrue(containsArrayList(subList, 3), "Test 79");
+  testTrue(!containsArrayList(subList, 1), "Test 80");
+  testTrue(!containsArrayList(subList, 4), "Test 81");
+  char expected2[] = "[2, 3]";
+  char *actual2 = arrayListToString(subList);
+  if (!testTrue(!strcmp(actual2, expected2), "Test 82")) {
+    printf("Expected: %s\n", expected2);
+    printf("Actual:   %s\n", actual2); 
+  }
 
   printf("\n------------------------------------------------------\n");
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
@@ -215,9 +236,12 @@ int main(void) {
   freeArrayList(another);
   freeArrayList(clonedList);
   freeArrayList(clonedList1);
+  freeArrayList(subList);
   free(newArr);
   free(arr2); 
   free(strTest);
   free(actual);
+  free(actual1);
+  free(actual2);
   printf("\n------------------------------------------------------\n\n");
 }

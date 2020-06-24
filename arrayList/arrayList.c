@@ -160,9 +160,8 @@ ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end) {
   ArrayList_t *subList = newArrayList(end - start); 
   if (!subList) return NULL; 
 
-  for (int i = start; i < end; i++) {
-    (subList->array)[i-start] = (list->array)[i]; 
-  }
+  for (int i = start; i < end; i++)
+    appendArrayList(subList, (list->array)[i]);
 
   return subList;
 }
