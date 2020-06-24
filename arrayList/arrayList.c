@@ -137,7 +137,15 @@ int indexOfArrayList(ArrayList_t *list, int elem) {
   return -1;
 }
 
-bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two);
+bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two) {
+  checkNullPointer(one);
+  checkNullPointer(two);
+
+  for (int i = 0; i < two->length; i++)
+    if (!appendArrayList(one, (two->array)[i])) return false;
+
+  return true;
+}
 
 ArrayList_t *cloneArrayList(ArrayList_t *list) {
   
@@ -161,7 +169,7 @@ ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end) {
   if (!subList) return NULL; 
 
   for (int i = start; i < end; i++)
-    appendArrayList(subList, (list->array)[i]);
+    if (!appendArrayList(subList, (list->array)[i])) return NULL;
 
   return subList;
 }
