@@ -64,6 +64,13 @@ bool equalsArrayList(ArrayList_t *one, ArrayList_t *two);
 int getArrayList(ArrayList_t *list, int index); 
 
 /*
+ * Sets element at given index to given value. If index == length, 
+ * appends value. If index > length, produces out of bounds error.
+ * Returns false if and only if realloc fails on append.
+ */
+bool setArrayList(ArrayList_t *list, int index, int value);
+
+/*
  * Inserts element at given index in given list, 
  * returns false if realloc fails of element not inserted.
  */
@@ -113,5 +120,17 @@ int *arrayListToArray(ArrayList_t *list);
  * Size of string will be 3 * length of ArrayList due to [ ,] chars.
  */
 char *arrayListToString(ArrayList_t *list);
+
+/*
+ * Removes all duplicated elements from arrayList. Keeps first occurrence 
+ * of element. Returns true if and only if there were any duplicates.
+ */
+bool remDupArrayList(ArrayList_t *list);
+
+/*
+ * Makes sure that the arrayList given has the given capacity.
+ * Resizes arrayList if needed. Returns false if realloc fails on resize;
+ */
+bool ensureCapacityArrayList(ArrayList_t *list);
 
 #endif
