@@ -144,19 +144,35 @@ ArrayList_t *cloneArrayList(ArrayList_t *list) {
   checkNullPointer(list);
   
   int *arr = arrayListToArray(list);
+  if (!arr) return NULL;
   ArrayList_t *clone = initArrayList(arr, list->length);
   free(arr);
 
   return clone;
 }
 
-ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end);
+ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end) {
+  if (end < start) return NULL;
+  checkNullPointer(list); //Produces error if list is NULL pointer. 
+  checkBounds(list, start);
+  checkBounds(list, end);
+
+  ArrayList_t *subList = newArrayList(end - start); 
+  if (!subList) return NULL; 
+
+  for (int i = start; i < end; i++) {
+    (subList->array)[i-start] = (list->array)[i]; 
+  }
+
+  return subList;
+}
 
 int *arrayListToArray(ArrayList_t *list) {
   
   checkNullPointer(list); //Produces error if list is NULL pointer. 
   
   int *arr = (int *) calloc(list->length, sizeof(int));
+  if (!arr) return NULL;
 
   for (int i = 0; i < list->length; i++)
     arr[i] = (list->array)[i];
@@ -170,6 +186,7 @@ char *arrayListToString(ArrayList_t *list) {
   
   int strLen = (list->length == 0) ? EMPTY_BRACKETS_LENGTH : list->length * 3;
   char *str = (char *) calloc(strLen, sizeof(char));
+  if (!str) return NULL;
 
   strcat(str, "[");
   
