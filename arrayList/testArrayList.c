@@ -9,11 +9,15 @@
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-bool testbool(bool condition, char *testname) {
+bool testTrue(bool condition, char *testname) {
   printf("%s: %s\n", testname, condition ?  
       ANSI_COLOR_GREEN "OK"  ANSI_COLOR_RESET :
       ANSI_COLOR_RED  "FAIL" ANSI_COLOR_RESET);
  return condition; 
+}
+
+bool testEquals(int one, int two, char *testname) {
+ return testTrue(one == two, testname); 
 }
 
 bool equalArrays(int *one, int *two, int size) {
@@ -34,147 +38,145 @@ void printArray(int *arr, int size) {
 int main(void) {
   ArrayList_t *list = createArrayList();
   
-  printf("\n---------Contains appended elements-------------------\n\n");
+  printf("\n---------appendArrayList tests------------------------\n\n");
   appendArrayList(list, 0);
   appendArrayList(list, 1);
   appendArrayList(list, 2);
   appendArrayList(list, 3);
-  testbool(containsArrayList(list, 3), "Test 01");
-  testbool(containsArrayList(list, 2), "Test 02");
-  testbool(containsArrayList(list, 0), "Test 03");
-  testbool(containsArrayList(list, 1), "Test 04");
+  testTrue(containsArrayList(list, 3), "Test 01");
+  testTrue(containsArrayList(list, 2), "Test 02");
+  testTrue(containsArrayList(list, 0), "Test 03");
+  testTrue(containsArrayList(list, 1), "Test 04");
 
-  printf("\n---------Doesn't contain removed elements-------------\n\n");
+  printf("\n---------removeArrayList & containsArrayList tests----\n\n");
   removeArrayList(list, 0);
-  testbool(!containsArrayList(list, 0), "Test 05");
+  testTrue(!containsArrayList(list, 0), "Test 05");
   removeArrayList(list, 0);
-  testbool(!containsArrayList(list, 1), "Test 06");
+  testTrue(!containsArrayList(list, 1), "Test 06");
   removeArrayList(list, 0);
-  testbool(!containsArrayList(list, 2), "Test 07");
+  testTrue(!containsArrayList(list, 2), "Test 07");
   removeArrayList(list, 0);
-  testbool(!containsArrayList(list, 3), "Test 08");
-
-  printf("\n---------Only removes one element at a time-----------\n\n");
+  testTrue(!containsArrayList(list, 3), "Test 08");
   appendArrayList(list, 0);
   appendArrayList(list, 0);
   removeArrayList(list, 1);
-  testbool(containsArrayList(list, 0), "Test 09");
+  testTrue(containsArrayList(list, 0), "Test 09");
   removeArrayList(list, 0);
-  testbool(!containsArrayList(list, 0), "Test 10");
+  testTrue(!containsArrayList(list, 0), "Test 10");
   
-  printf("\n---------isEmpty tests-------------------------------\n\n");
+  printf("\n---------isEmptyArrayList tests----------------------\n\n");
   appendArrayList(list, 13);
-  testbool(!isEmptyArrayList(list), "Test 11");
+  testTrue(!isEmptyArrayList(list), "Test 11");
   removeArrayList(list, 0);
-  testbool(isEmptyArrayList(list), "Test 12");
+  testTrue(isEmptyArrayList(list), "Test 12");
   
-  printf("\n---------length tests---------------------------------\n\n");
+  printf("\n---------lengthArrayList tests------------------------\n\n");
   appendArrayList(list, 13);
-  testbool(lengthArrayList(list) == 1, "Test 13");
+  testEquals(lengthArrayList(list), 1, "Test 13");
   appendArrayList(list, 0);
-  testbool(lengthArrayList(list) == 2, "Test 14");
+  testEquals(lengthArrayList(list), 2, "Test 14");
   appendArrayList(list, 2753);
-  testbool(lengthArrayList(list) == 3, "Test 15");
+  testEquals(lengthArrayList(list), 3, "Test 15");
   appendArrayList(list, 123456);
-  testbool(lengthArrayList(list) == 4, "Test 16");
+  testEquals(lengthArrayList(list), 4, "Test 16");
   removeArrayList(list, 3);
-  testbool(lengthArrayList(list) == 3, "Test 17");
+  testEquals(lengthArrayList(list), 3, "Test 17");
   removeArrayList(list, 2);
-  testbool(lengthArrayList(list) == 2, "Test 18");
+  testEquals(lengthArrayList(list), 2, "Test 18");
   removeArrayList(list, 1);
-  testbool(lengthArrayList(list) == 1, "Test 19");
+  testEquals(lengthArrayList(list), 1, "Test 19");
   removeArrayList(list, 0);
-  testbool(lengthArrayList(list) == 0, "Test 20");
+  testEquals(lengthArrayList(list), 0, "Test 20");
   
-  printf("\n---------equals tests---------------------------------\n\n");
+  printf("\n---------equalsArrayList tests------------------------\n\n");
   ArrayList_t *other = createArrayList();
-  testbool(equalsArrayList(list, other), "Test 21");
+  testTrue(equalsArrayList(list, other), "Test 21");
   appendArrayList(other, 1); 
-  testbool(!equalsArrayList(list, other), "Test 22");
+  testTrue(!equalsArrayList(list, other), "Test 22");
   appendArrayList(other, 2); 
   appendArrayList(list, 1); 
   appendArrayList(list, 2); 
-  testbool(equalsArrayList(list, other), "Test 23");
+  testTrue(equalsArrayList(list, other), "Test 23");
   appendArrayList(list, 2); 
-  testbool(!equalsArrayList(list, other), "Test 24");
+  testTrue(!equalsArrayList(list, other), "Test 24");
   appendArrayList(other, 2); 
-  testbool(equalsArrayList(list, other), "Test 25");
+  testTrue(equalsArrayList(list, other), "Test 25");
   removeArrayList(list, 2);
-  testbool(!equalsArrayList(list, other), "Test 26");
+  testTrue(!equalsArrayList(list, other), "Test 26");
   removeArrayList(other, 1);
-  testbool(equalsArrayList(list, other), "Test 27");
+  testTrue(equalsArrayList(list, other), "Test 27");
   removeArrayList(other, 0);
   removeArrayList(other, 0);
   removeArrayList(list, 0);
   removeArrayList(list, 0);
-  testbool(equalsArrayList(list, other), "Test 28");
+  testTrue(equalsArrayList(list, other), "Test 28");
   
-  printf("\n---------get tests-----------------------------------\n\n");
+  printf("\n---------getArrayList tests--------------------------\n\n");
   appendArrayList(list, 13);
-  testbool(getArrayList(list, 0) == 13, "Test 29");
-  testbool(getArrayList(list, 0) == 13, "Test 30");
+  testEquals(getArrayList(list, 0), 13, "Test 29");
+  testEquals(getArrayList(list, 0), 13, "Test 30");
   appendArrayList(list, 246772);
   appendArrayList(list, -5463);
   appendArrayList(list, 0x500);
   appendArrayList(list, -0x500);
-  testbool(getArrayList(list, 1) == 246772, "Test 31");
-  testbool(getArrayList(list, 2) == -5463, "Test 32");
-  testbool(getArrayList(list, 3) == 0x500, "Test 33");
-  testbool(getArrayList(list, 4) == -0x500, "Test 34");
+  testEquals(getArrayList(list, 1), 246772, "Test 31");
+  testEquals(getArrayList(list, 2), -5463, "Test 32");
+  testEquals(getArrayList(list, 3), 0x500, "Test 33");
+  testEquals(getArrayList(list, 4), -0x500, "Test 34");
 
-  printf("\n---------clear tests---------------------------------\n\n");
-  testbool(!isEmptyArrayList(list), "Test 35");
+  printf("\n---------clearArrayList tests------------------------\n\n");
+  testTrue(!isEmptyArrayList(list), "Test 35");
   clearArrayList(list);
-  testbool(isEmptyArrayList(list), "Test 36");
-  testbool(!containsArrayList(list, 13), "Test 37");
-  testbool(!containsArrayList(list, 246772), "Test 38");
+  testTrue(isEmptyArrayList(list), "Test 36");
+  testTrue(!containsArrayList(list, 13), "Test 37");
+  testTrue(!containsArrayList(list, 246772), "Test 38");
 
-  printf("\n---------insert tests--------------------------------\n\n");
+  printf("\n---------insertArrayList tests-----------------------\n\n");
   appendArrayList(list, 0);  
   appendArrayList(list, 4);  
   insertArrayList(list, 1, 2);
-  testbool(containsArrayList(list, 2), "Test 39");
-  testbool(getArrayList(list, 1) == 2, "Test 40");
-  testbool(removeArrayList(list, 0) == 0, "Test 41");
-  testbool(removeArrayList(list, 0) == 2, "Test 42");
-  testbool(removeArrayList(list, 0) == 4, "Test 43");
-  testbool(isEmptyArrayList(list), "Test 44");
+  testTrue(containsArrayList(list, 2), "Test 39");
+  testEquals(getArrayList(list, 1), 2, "Test 40");
+  testEquals(removeArrayList(list, 0), 0, "Test 41");
+  testEquals(removeArrayList(list, 0), 2, "Test 42");
+  testEquals(removeArrayList(list, 0), 4, "Test 43");
+  testTrue(isEmptyArrayList(list), "Test 44");
   insertArrayList(list, 0, 3);
-  testbool(containsArrayList(list, 3), "Test 45");
-  testbool(removeArrayList(list, 0) == 3, "Test 46");
+  testTrue(containsArrayList(list, 3), "Test 45");
+  testEquals(removeArrayList(list, 0), 3, "Test 46");
 
-  printf("\n---------index of tests------------------------------\n\n");
+  printf("\n---------indexOfArrayList tests----------------------\n\n");
   appendArrayList(list, 0);
   appendArrayList(list, 1);
   appendArrayList(list, 2);
-  testbool(indexOfArrayList(list, 0) == 0, "Test 47"); 
-  testbool(indexOfArrayList(list, 1) == 1, "Test 48"); 
-  testbool(indexOfArrayList(list, 2) == 2, "Test 49"); 
-  testbool(indexOfArrayList(list, 9) == -1, "Test 50"); 
-  testbool(indexOfArrayList(list, 8) == -1, "Test 51"); 
+  testEquals(indexOfArrayList(list, 0), 0, "Test 47"); 
+  testEquals(indexOfArrayList(list, 1), 1, "Test 48"); 
+  testEquals(indexOfArrayList(list, 2), 2, "Test 49"); 
+  testEquals(indexOfArrayList(list, 9), -1, "Test 50"); 
+  testEquals(indexOfArrayList(list, 8), -1, "Test 51"); 
   clearArrayList(list); 
-  testbool(indexOfArrayList(list, 0) == -1, "Test 52");
+  testEquals(indexOfArrayList(list, 0), -1, "Test 52");
 
-  printf("\n---------init tests----------------------------------\n\n");
+  printf("\n---------initArrayList tests-------------------------\n\n");
   int arr[] = {1, 2, 3, 4, 5};
   ArrayList_t *another = initArrayList(arr, 5);
-  testbool(containsArrayList(another, 1), "Test 53");
-  testbool(containsArrayList(another, 2), "Test 54");
-  testbool(containsArrayList(another, 3), "Test 55");
-  testbool(containsArrayList(another, 4), "Test 56");
-  testbool(containsArrayList(another, 5), "Test 57");
-  testbool(!containsArrayList(another, 0), "Test 58");
-  testbool(!containsArrayList(another, 6), "Test 59");
-  testbool(!containsArrayList(another, 8), "Test 60");
+  testTrue(containsArrayList(another, 1), "Test 53");
+  testTrue(containsArrayList(another, 2), "Test 54");
+  testTrue(containsArrayList(another, 3), "Test 55");
+  testTrue(containsArrayList(another, 4), "Test 56");
+  testTrue(containsArrayList(another, 5), "Test 57");
+  testTrue(!containsArrayList(another, 0), "Test 58");
+  testTrue(!containsArrayList(another, 6), "Test 59");
+  testTrue(!containsArrayList(another, 8), "Test 60");
 
-  printf("\n---------to array tests------------------------------\n\n");
+  printf("\n---------arrayListToArray tests----------------------\n\n");
   int *newArr = arrayListToArray(another);
-  testbool(equalArrays(arr, newArr, another->length), "Test 61");
+  testTrue(equalArrays(arr, newArr, another->length), "Test 61");
   int arr1[1];
   int *arr2 = arrayListToArray(list);
-  testbool(equalArrays(arr1, arr2, list->length), "Test 62");
+  testTrue(equalArrays(arr1, arr2, list->length), "Test 62");
 
-  printf("\n---------to string tests-----------------------------\n\n");
+  printf("\n---------arrayListToString tests---------------------\n\n");
   printf("Test 63:\n  Expected: ");
   printArray(newArr, another->length);
   char *strTest = arrayListToString(another);
@@ -183,16 +185,36 @@ int main(void) {
   clearArrayList(another);
   char expected[] = "[]";
   char *actual = arrayListToString(another);
-  if (!testbool(!strncmp(actual, expected, 3), "Test 64")) {
+  if (!testTrue(!strncmp(actual, expected, 3), "Test 64")) {
     printf("Expected: %s\n", expected);
     printf("Actual:   %s\n", actual); 
   }
+
+  printf("\n---------cloneArrayList tests------------------------\n\n");
+  ArrayList_t *clonedList = cloneArrayList(list);
+  testTrue(clonedList != list, "Test 65"); 
+  testTrue(equalsArrayList(list, clonedList), "Test 66");
+  appendArrayList(list, 1); 
+  appendArrayList(list, 2); 
+  appendArrayList(list, 3); 
+  appendArrayList(list, 4); 
+  ArrayList_t *clonedList1 = cloneArrayList(list);
+  testTrue(clonedList1 != list, "Test 67"); 
+  testTrue(equalsArrayList(list, clonedList1), "Test 68");
+  testTrue(containsArrayList(clonedList1, 1), "Test 69");
+  testTrue(containsArrayList(clonedList1, 2), "Test 70");
+  testTrue(containsArrayList(clonedList1, 3), "Test 71");
+  testTrue(containsArrayList(clonedList1, 4), "Test 72");
+  testTrue(!containsArrayList(clonedList1, 0), "Test 73");
+  testTrue(!containsArrayList(clonedList1, 5), "Test 74");
 
   printf("\n------------------------------------------------------\n");
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   freeArrayList(list);
   freeArrayList(other);
   freeArrayList(another);
+  freeArrayList(clonedList);
+  freeArrayList(clonedList1);
   free(newArr);
   free(arr2); 
   free(strTest);
