@@ -9,7 +9,12 @@
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+int NUM_TESTS = 0;
+int TESTS_FAILED = 0;
+
 bool testTrue(bool condition, char *testname) {
+  NUM_TESTS++;
+  if (!condition) TESTS_FAILED++;
   printf("%s: %s\n", testname, condition ?  
       ANSI_COLOR_GREEN "OK"  ANSI_COLOR_RESET :
       ANSI_COLOR_RED  "FAIL" ANSI_COLOR_RESET);
@@ -36,6 +41,7 @@ void printArray(int *arr, int size) {
 }
 
 int main(void) {
+
   ArrayList_t *list = createArrayList();
   
   printf("\n---------appendArrayList tests------------------------\n\n");
@@ -177,10 +183,12 @@ int main(void) {
   testTrue(equalArrays(arr1, arr2, list->length), "Test 62");
 
   printf("\n---------arrayListToString tests---------------------\n\n");
-  printf("Test 63:\n  Expected: ");
-  printArray(newArr, another->length);
+  char expectedStr[] = "[1, 2, 3, 4, 5]";
   char *strTest = arrayListToString(another);
-  printf("  Actual:   %s\n", strTest); 
+  if (!testTrue(!strcmp(strTest, expectedStr), "Test 63")) {
+    printf("Expected: %s\n", expectedStr);
+    printf("Actual:   %s\n", strTest); 
+  }
 
   clearArrayList(another);
   char expected[] = "[]";
@@ -229,7 +237,9 @@ int main(void) {
     printf("Actual:   %s\n", actual2); 
   }
 
-  printf("\n------------------------------------------------------\n");
+  printf("\n-----------------------SUMMARY-----------------------\n");
+  printf("\nTests Ran: %d\nPassed: %d\nFailed %d\n", 
+      NUM_TESTS, NUM_TESTS - TESTS_FAILED, TESTS_FAILED);
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   freeArrayList(list);
   freeArrayList(other);
