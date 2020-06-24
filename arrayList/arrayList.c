@@ -114,8 +114,8 @@ bool insertArrayList(ArrayList_t *list, int index, int elem) {
   if (!doubleCapacityIfNeeded(list)) return false;
   
   list->length++;
-  for (int i = index; i < list->length; i++)
-    (list->array)[i+1] = (list->array)[i]; 
+  for (int i = list->length; i > index; i--)
+    (list->array)[i] = (list->array)[i-1]; 
 
   (list->array)[index] = elem; 
 
