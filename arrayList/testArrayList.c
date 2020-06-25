@@ -248,6 +248,11 @@ int main(void) {
   testTrue(ensureCapacityArrayList(list, 12));
   testEquals(list->size, 12);
 
+  printf("\n---------setArrayList tests--------------------------\n\n");
+  testTrue(setArrayList(list, 2, 10));
+  testEquals(getArrayList(list, 2), 10); 
+  testToString(list, "[1, 2, 10, 4]");
+
   printf("\n-----------------------SUMMARY-----------------------\n");
   printf("\nNo. Tests: %d\nPassed:    %d\nFailed:    %d\n", 
       NUM_TESTS, NUM_TESTS - TESTS_FAILED, TESTS_FAILED);
