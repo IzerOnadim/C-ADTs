@@ -20,7 +20,7 @@ bool testTrueLine(bool condition, int line) {
   char fail[MAX_LINE_LENGTH];
   sprintf(fail, ANSI_COLOR_RED "FAIL - line: %d" ANSI_COLOR_RESET, line);
   if (!condition) TESTS_FAILED++;
-  printf("Test %2d: %s\n", NUM_TESTS, condition ?  
+  printf("Test %3d: %s\n", NUM_TESTS, condition ?  
       ANSI_COLOR_GREEN "PASS"  ANSI_COLOR_RESET : fail);
  return condition; 
 }
@@ -252,6 +252,10 @@ int main(void) {
   testTrue(setArrayList(list, 2, 10));
   testEquals(getArrayList(list, 2), 10); 
   testToString(list, "[1, 2, 10, 4]");
+  testTrue(setArrayList(list, 4, 2020));
+  testEquals(getArrayList(list, 4), 2020); 
+  testToString(list, "[1, 2, 10, 4, 2020]");
+
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   printf("\nNo. Tests: %d\nPassed:    %d\nFailed:    %d\n", 
