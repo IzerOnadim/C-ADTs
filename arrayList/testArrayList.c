@@ -264,6 +264,20 @@ int main(void) {
   testEquals(getArrayList(list, 4), 2020); 
   testToString(list, "[1, 2, 10, 4, 2020]");
 
+  printf("\n---------remDupArrayList tests-----------------------\n\n");
+  int dupArr[] = {1, 2, 2, 3, 4, 1, 15, 24, 24, 1, 3, 4};
+  ArrayList_t *dupList = initArrayList(dupArr, 12);
+  testTrue(remDupArrayList(dupList));
+  testToString(dupList, "[1, 2, 3, 4, 15, 24]");
+  testTrue(!remDupArrayList(dupList));
+  clearArrayList(dupList);
+  testTrue(!remDupArrayList(dupList));
+  appendArrayList(dupList, 21234);
+  appendArrayList(dupList, 21234);
+  testEquals(lengthArrayList(dupList), 2);
+  testTrue(remDupArrayList(dupList));
+  testEquals(lengthArrayList(dupList), 1);
+  testToString(dupList, "[21234]");
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
@@ -283,6 +297,7 @@ int main(void) {
   freeArrayList(clonedList);
   freeArrayList(clonedList1);
   freeArrayList(subList);
+  freeArrayList(dupList);
   free(newArr);
   free(arr2); 
   printf("\n------------------------------------------------------\n\n");

@@ -227,18 +227,19 @@ bool remDupArrayList(ArrayList_t *list) {
   checkNullPointer(list);
   
   bool dup = false;
-  ArrayList_t *seen = newArrayList(list->size);
+  ArrayList_t *seen = newArrayList(list->length);
   
-  for (int i = 0; i < list->size; i++) {
+  for (int i = 0; i < list->length;) {
     if (containsArrayList(seen, list->array[i])) {
       dup = true;
       removeArrayList(list, i);
     } else {
       appendArrayList(seen, list->array[i]);
+      i++;
     }
   }
 
-  free(seen); 
+  freeArrayList(seen); 
   return dup;
 }
 
