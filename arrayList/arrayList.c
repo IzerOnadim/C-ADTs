@@ -13,6 +13,8 @@ static void outOfBoundsError();
 static void checkBounds(ArrayList_t *list, int index);
 static void checkBoundOrEqual(ArrayList_t *list, int index);
 static void checkNullPointer(ArrayList_t *list);
+static int numDigits(int value);
+static int listStringLength(ArrayList_t *list);
 
 ArrayList_t *createArrayList(void) {
   return newArrayList(0);
@@ -203,15 +205,14 @@ int *arrayListToArray(ArrayList_t *list) {
 char *arrayListToString(ArrayList_t *list) {
   
   checkNullPointer(list); //Produces error if list is NULL pointer. 
-  
-  int strLen = (list->length == 0) ? EMPTY_BRACKETS_LENGTH : list->length * 3;
-  char *str = (char *) calloc(strLen, sizeof(char));
+  int lenStr = listStringLength(list);
+  char *str = (char *) calloc(lenStr, sizeof(char));
   if (!str) return NULL;
 
   strcat(str, "[");
   
   for (int i = 0; i < list->length; i++) {
-    char num[3];
+    char num[numDigits(list->array[i]) + 2];
     sprintf(num, "%s%d%s", i == 0 ? "" : " ", (list->array)[i], 
         i < list->length - 1 ? "," : ""); 
     strcat(str, num);
@@ -249,6 +250,24 @@ static ArrayList_t *newArrayList(int size) {
   if (!list->array) return NULL;
   
   return list;
+}
+
+static int numDigits(int value) {
+  int count = 0;
+  
+  for (; value != 0; count++)
+    value /= 10;
+  
+  return count;
+}
+
+static int listStringLength(ArrayList_t *list) {
+  int length = EMPTY_BRACKETS_LENGTH;
+
+  for (int i = 0; i < list->length; i++)
+    length += numDigits((list->array)[i]) + EMPTY_BRACKETS_LENGTH;
+
+  return length - EMPTY_BRACKETS_LENGTH;
 }
 
 static void checkBoundOrEqual(ArrayList_t *list, int index) {
