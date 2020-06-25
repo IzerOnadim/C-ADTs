@@ -223,6 +223,25 @@ char *arrayListToString(ArrayList_t *list) {
   return str;
 }
 
+bool remDupArrayList(ArrayList_t *list) {
+  checkNullPointer(list);
+  
+  bool dup = false;
+  ArrayList_t *seen = newArrayList(list->size);
+  
+  for (int i = 0; i < list->size; i++) {
+    if (containsArrayList(seen, list->array[i])) {
+      dup = true;
+      removeArrayList(list, i);
+    } else {
+      appendArrayList(seen, list->array[i]);
+    }
+  }
+
+  free(seen); 
+  return dup;
+}
+
 bool ensureCapacityArrayList(ArrayList_t *list, int capacity) {
   checkNullPointer(list);
 
