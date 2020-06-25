@@ -9,7 +9,9 @@
 
 static ArrayList_t *newArrayList(int size);
 static bool doubleCapacityIfNeeded(ArrayList_t *list);
+static void outOfBoundsError();
 static void checkBounds(ArrayList_t *list, int index);
+static void checkBoundOrEqual(ArrayList_t *list, int index);
 static void checkNullPointer(ArrayList_t *list);
 
 ArrayList_t *createArrayList(void) {
@@ -103,6 +105,17 @@ int getArrayList(ArrayList_t *list, int index) {
   return (list->array)[index];
 }
 
+bool setArrayList(ArrayList_t *list, int index, int value) {
+  checkNullPointer(list);
+  checkBoundOrEqual(list, index);
+
+  if (list->length == index)
+    return appendArrayList(list, value);
+  
+  (list->array)[index] = value;
+  return true;
+}
+
 bool insertArrayList(ArrayList_t *list, int index, int elem) {
   
   checkNullPointer(list); //Produces error if list is NULL pointer. 
@@ -163,7 +176,7 @@ ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end) {
   if (end < start) return NULL;
   checkNullPointer(list); //Produces error if list is NULL pointer. 
   checkBounds(list, start);
-  checkBounds(list, end);
+  checkBoundOrEqual(list, end);
 
   ArrayList_t *subList = newArrayList(end - start); 
   if (!subList) return NULL; 
@@ -238,17 +251,19 @@ static ArrayList_t *newArrayList(int size) {
   return list;
 }
 
+static void checkBoundOrEqual(ArrayList_t *list, int index) {
+  checkNullPointer(list); 
+  if (index < 0 || index > list->length)
+    outOfBoundsError();
+}
+
 /*
  * Causes error if an index is out of bounds.
  */
 static void checkBounds(ArrayList_t *list, int index) {
-  
-  checkNullPointer(list); //Produces error if list is NULL pointer. 
-  
-  if (index < 0 || index >= list->length) {
-    fprintf(stderr, "Out of bounds array list access.");
-    exit(EXIT_FAILURE);
-  }
+  checkNullPointer(list); 
+  if (index < 0 || index >= list->length)
+    outOfBoundsError();
 }
 
 /*
@@ -275,3 +290,11 @@ static void checkNullPointer(ArrayList_t *list) {
     exit(EXIT_FAILURE);
   }
 }
+
+/*
+ * Produces Error, exits program.
+ */
+static void outOfBoundsError() {
+  fprintf(stderr, "Out of bounds array list access.");
+  exit(EXIT_FAILURE);
+}  
