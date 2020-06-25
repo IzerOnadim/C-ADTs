@@ -11,6 +11,7 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #define testTrue(a) testTrueLine(a, __LINE__)
 #define testEquals(a, b) testEqualsLine(a, b,__LINE__)
+#define TESTS_PASSED (NUM_TESTS - TESTS_FAILED)
 
 int NUM_TESTS = 0;
 int TESTS_FAILED = 0;
@@ -51,6 +52,13 @@ void printArray(int *arr, int size) {
     printf("%s%d%s", i == 0 ? "" : " ", arr[i], i < size - 1 ? "," : "");
   }
   printf("]\n");
+}
+
+static int numDigits(int value) {
+  int count = 0;
+  for (; value != 0; count++)
+    value /= 10; 
+  return count;
 }
 
 int main(void) {
@@ -258,8 +266,16 @@ int main(void) {
 
 
   printf("\n-----------------------SUMMARY-----------------------\n");
-  printf("\nNo. Tests: %d\nPassed:    %d\nFailed:    %d\n", 
-      NUM_TESTS, NUM_TESTS - TESTS_FAILED, TESTS_FAILED);
+  int n = numDigits(NUM_TESTS);
+  char tests[MAX_LINE_LENGTH];
+  char passed[MAX_LINE_LENGTH];
+  char failed[MAX_LINE_LENGTH];
+  sprintf(tests, "\nNo. Tests: %*d\n", n, NUM_TESTS);
+  sprintf(passed, TESTS_PASSED <= 0 ? "Passed:    %*d\n" :
+    ANSI_COLOR_GREEN "Passed:    %*d\n" ANSI_COLOR_RESET, n, TESTS_PASSED);
+  sprintf(failed, TESTS_FAILED <= 0 ? "Failed:    %*d\n" :
+    ANSI_COLOR_RED "Failed:    %*d\n" ANSI_COLOR_RESET, n, TESTS_FAILED);
+  printf("%s%s%s", tests, passed, failed);
   printf("\nFreeing memory now... Run valgrind to check for leaks.\n");
   freeArrayList(list);
   freeArrayList(other);
