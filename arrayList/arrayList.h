@@ -131,6 +131,6 @@ bool remDupArrayList(ArrayList_t *list);
  * Makes sure that the arrayList given has the given capacity.
  * Resizes arrayList if needed. Returns false if realloc fails on resize;
  */
-bool ensureCapacityArrayList(ArrayList_t *list);
+bool ensureCapacityArrayList(ArrayList_t *list, int capacity);
 
 #endif

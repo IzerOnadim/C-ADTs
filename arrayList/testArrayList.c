@@ -242,6 +242,12 @@ int main(void) {
   testTrue(!containsArrayList(other, 1));
   testToString(other, "[2, 3]");
 
+  printf("\n---------ensureCapacityArrayList tests---------------\n\n");
+  testTrue(ensureCapacityArrayList(other, 5));
+  testEquals(other->size, 5);
+  testTrue(ensureCapacityArrayList(list, 12));
+  testEquals(list->size, 12);
+
   printf("\n-----------------------SUMMARY-----------------------\n");
   printf("\nNo. Tests: %d\nPassed:    %d\nFailed:    %d\n", 
       NUM_TESTS, NUM_TESTS - TESTS_FAILED, TESTS_FAILED);

@@ -209,6 +209,18 @@ char *arrayListToString(ArrayList_t *list) {
   return str;
 }
 
+bool ensureCapacityArrayList(ArrayList_t *list, int capacity) {
+  checkNullPointer(list);
+
+  if (list->size < capacity) {
+    list->size = capacity;
+    list->array = (int *) realloc(list->array, list->size * sizeof(int));
+    if (!list->array) return false;  
+  }
+  
+  return true;  
+}
+
 /*
  * Creates empty arrayList with given size.
  * Returns NULL if allocation fails.
@@ -263,4 +275,3 @@ static void checkNullPointer(ArrayList_t *list) {
     exit(EXIT_FAILURE);
   }
 }
-
