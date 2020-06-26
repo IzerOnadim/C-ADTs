@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "utils.h"
 #include "arrayList.h"
 
 #define MAX_LINE_LENGTH (50)
@@ -53,13 +54,6 @@ void printArray(int *arr, int size) {
     printf("%s%d%s", i == 0 ? "" : " ", arr[i], i < size - 1 ? "," : "");
   }
   printf("]\n");
-}
-
-static int numDigits(int value) {
-  int count = 0;
-  for (; value != 0; count++)
-    value /= 10; 
-  return count;
 }
 
 int main(void) {
