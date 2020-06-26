@@ -19,7 +19,8 @@ int TESTS_FAILED = 0;
 bool testTrueLine(bool condition, int line) {
   NUM_TESTS++;
   char fail[MAX_LINE_LENGTH];
-  sprintf(fail, ANSI_COLOR_RED "FAIL - line: %d" ANSI_COLOR_RESET, line);
+  sprintf(fail, ANSI_COLOR_RED "FAIL - line: %d in %s" ANSI_COLOR_RESET, 
+      line, __FILE__);
   if (!condition) TESTS_FAILED++;
   printf("Test %3d: %s\n", NUM_TESTS, condition ?  
       ANSI_COLOR_GREEN "PASS"  ANSI_COLOR_RESET : fail);
@@ -65,6 +66,7 @@ int main(void) {
 
   ArrayList_t *list = createArrayList();
   
+  printf("\n-----------------LIST FUNCTION TESTS------------------\n");
   printf("\n---------appendArrayList tests------------------------\n\n");
   appendArrayList(list, 0);
   appendArrayList(list, 1);
@@ -279,6 +281,17 @@ int main(void) {
   testEquals(lengthArrayList(dupList), 1);
   testToString(dupList, "[21234]");
 
+  printf("\n----------------QUEUE FUNCTION TESTS-----------------\n");
+
+  printf("\n---------dequeueArrayList tests----------------------\n\n");
+  testEquals(dequeueArrayList(dupList), 21234);
+  testTrue(isEmptyArrayList(dupList)); 
+  testEquals(dequeueArrayList(list), 1); 
+  
+  printf("\n---------peekArrayList tests-------------------------\n\n");
+  
+  printf("\n---------enqueueArrayList tests----------------------\n\n");
+  
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
   char tests[MAX_LINE_LENGTH];
