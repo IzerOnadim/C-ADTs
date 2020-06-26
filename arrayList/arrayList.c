@@ -355,7 +355,8 @@ static bool doubleCapacityIfNeeded(ArrayList_t *list) {
  */
 static void checkNullPointer(ArrayList_t *list) {
   if (!list) {
-    fprintf(stderr, "Null pointer given.");
+    fprintf(stderr, ANSI_COLOR_RED 
+        "\nERROR: Null pointer given.\n\n" ANSI_COLOR_RESET);
     exit(EXIT_FAILURE);
   }
 }
@@ -365,7 +366,8 @@ static void checkNullPointer(ArrayList_t *list) {
  */
 static void checkEmptyQueue(ArrayList_t *list) {
   if (isEmptyArrayList(list)) {
-    fprintf(stderr, "Queue is empty");
+    fprintf(stderr, ANSI_COLOR_RED 
+        "\nERROR: Queue is empty\n\n" ANSI_COLOR_RESET);
     exit(EXIT_FAILURE);
   }
 }  
@@ -374,6 +376,7 @@ static void checkEmptyQueue(ArrayList_t *list) {
  * Produces Error, exits program.
  */
 static void outOfBoundsError() {
-  fprintf(stderr, "Out of bounds ArrayList access.");
+  fprintf(stderr, ANSI_COLOR_RED 
+      "\nERROR: Out of bounds ArrayList access.\n\n" ANSI_COLOR_RESET);
   exit(EXIT_FAILURE);
 }  
