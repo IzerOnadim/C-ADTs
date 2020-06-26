@@ -293,14 +293,21 @@ int main(void) {
   testEquals(lengthArrayList(list), origLen - 1);
 
   printf("\n---------peekArrayList tests-------------------------\n\n");
-  int originalLength = lengthArrayList(list);
+  origLen = lengthArrayList(list);
   testEquals(peekArrayList(list), 2); 
   testEquals(peekArrayList(list), 2); 
-  testEquals(lengthArrayList(list), originalLength);
+  testEquals(lengthArrayList(list), origLen);
   testToString(list, "[2, 10, 4, 2020]");
 
   printf("\n---------enqueueArrayList tests----------------------\n\n");
-  
+  enqueueArrayList(list, 2021);
+  testEquals(lengthArrayList(list), origLen + 1);
+  testEquals(getArrayList(list, origLen), 2021); 
+  testToString(list, "[2, 10, 4, 2020, 2021]");
+  testTrue(enqueueArrayList(dupList, 15));
+  testEquals(lengthArrayList(dupList), 1);
+  testToString(dupList, "[15]"); 
+
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
   char tests[MAX_LINE_LENGTH];
