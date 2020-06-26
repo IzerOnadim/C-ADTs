@@ -286,10 +286,19 @@ int main(void) {
   printf("\n---------dequeueArrayList tests----------------------\n\n");
   testEquals(dequeueArrayList(dupList), 21234);
   testTrue(isEmptyArrayList(dupList)); 
+  testToString(dupList, "[]");
+  int origLen = lengthArrayList(list);
   testEquals(dequeueArrayList(list), 1); 
-  
+  testToString(list, "[2, 10, 4, 2020]");
+  testEquals(lengthArrayList(list), origLen - 1);
+
   printf("\n---------peekArrayList tests-------------------------\n\n");
-  
+  int originalLength = lengthArrayList(list);
+  testEquals(peekArrayList(list), 2); 
+  testEquals(peekArrayList(list), 2); 
+  testEquals(lengthArrayList(list), originalLength);
+  testToString(list, "[2, 10, 4, 2020]");
+
   printf("\n---------enqueueArrayList tests----------------------\n\n");
   
   printf("\n-----------------------SUMMARY-----------------------\n");
