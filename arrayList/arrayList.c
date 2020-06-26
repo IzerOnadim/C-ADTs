@@ -151,6 +151,20 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   return true;
 }
 
+bool removeAllArrayList(ArrayList_t *list, int elem) {
+  checkNullPointer(list);
+  bool found = false;
+  
+  for (int i = 0; i < list->length; i++) {
+    if ((list->array)[i] == elem) {
+      removeArrayList(list, i);
+      found = true;
+    } 
+  }
+
+  return found;
+}
+
 ArrayList_t *cloneArrayList(ArrayList_t *list) {
   
   checkNullPointer(list);
@@ -261,4 +275,11 @@ int peekArrayList(ArrayList_t *list) {
 bool enqueueArrayList(ArrayList_t *list, int elem) {
   return appendArrayList(list, elem);
 }
+
+/*--------------------------Set functions------------------------------*/
+
+ArrayList_t *unionArrayList(const ArrayList_t *one, const ArrayList_t *two);
+ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two);
+ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
+bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
