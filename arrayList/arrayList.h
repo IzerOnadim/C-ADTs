@@ -16,7 +16,7 @@ typedef struct ArrayList {
 ArrayList_t *createArrayList(void);
 
 /*
- * Creats and initialises arrayList with a given array.
+ * Creates and initialises ArrayList with a given array.
  * Returns NULL if allocation fails or if given pointer is NULL.
  */
 ArrayList_t *initArrayList(int *array, int size);
@@ -33,7 +33,7 @@ void freeArrayList(ArrayList_t *list);
 bool appendArrayList(ArrayList_t *list, int elem);
 
 /*
- * Removes an element from the a given location in the list 
+ * Removes an element from the given location in the list 
  * and returns it. 
  */
 int removeArrayList(ArrayList_t *list, int index);
@@ -54,7 +54,7 @@ int lengthArrayList(ArrayList_t *list);
 bool containsArrayList(ArrayList_t *list, int elem);
 
 /*
- * Returns true if the two given arraylists are equal.
+ * Returns true if the two given ArrayLists are equal.
  */
 bool equalsArrayList(ArrayList_t *one, ArrayList_t *two); 
 
@@ -66,15 +66,41 @@ int getArrayList(ArrayList_t *list, int index);
 /*
  * Sets element at given index to given value. If index == length, 
  * appends value. If index > length, produces out of bounds error.
- * Returns false if and only if realloc fails on append.
+ * Returns false if and only if reallocation fails on append.
  */
 bool setArrayList(ArrayList_t *list, int index, int value);
 
 /*
  * Inserts element at given index in given list, 
- * returns false if realloc fails of element not inserted.
+ * returns false if reallocation fails of element not inserted.
  */
 bool insertArrayList(ArrayList_t *list, int index, int elem); 
+
+/*
+ * Returns the index of the first occurrence of an element,
+ * Returns the -1 if no occurrence of element.
+ */
+int indexOfArrayList(ArrayList_t *list, int elem);
+
+/*
+ * Appends all the elements of the second array list to the first one.
+ * Returns true if successful.
+ */
+bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two);
+
+/*
+ * Removes all occurrences of every element in ArrayList two, from
+ * ArrayList one. Returns true if there was any thing to remove.
+ */
+//TODO: implement this.
+bool removeAll(ArrayList_t *one, ArrayList_t *two);
+
+/*
+ * Removes all occurrences of given element from given list.
+ * Returns true if there was at least one element to remove.
+ */
+//TODO: implement this.
+bool removeElemArrayList(ArrayList_t *list, int elem);
 
 /*
  * Clears / empties array list, without changing capacity.
@@ -82,42 +108,29 @@ bool insertArrayList(ArrayList_t *list, int index, int elem);
 void clearArrayList(ArrayList_t *list);
 
 /*
- * Returns the index of the first occurence of an element,
- * Returns the -1 if no occurence of element.
- */
-int indexOfArrayList(ArrayList_t *list, int elem);
-
-/*
- * Appends all the elements of the second array list to the first one.
- * Rerturns true if successful.
- */
-bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two);
-
-/*
- * Creates and returns a new, identical arrayList to the one given.
- * Returns NULL if alloc fails.
+ * Creates and returns a new, identical ArrayList to the one given.
+ * Returns NULL if allocation fails.
  */
 ArrayList_t *cloneArrayList(ArrayList_t *list);
 
 /*
- * Creates and returns a new arrayList that is a sublist of the given one,
+ * Creates and returns a new ArrayList that is a sub-list of the given one,
  * from index start (inclusive) to index end (exclusive). 
  * Produces error if either index is out of bounds.  
  */
 ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end);
 
 /*
- * Returns array version of given ArrayList. Array is dynamically 
- * allocated and must be freed. Returns  null pointer if alloc fails.
- * Array size will be the same as the length of the ArrayList.
+ * Returns array version of given arrayList. Array is dynamically 
+ * allocated and must be freed. Returns  null pointer if allocation fails.
+ * Array size will be the same as the length of the arrayList.
  */
 int *arrayListToArray(ArrayList_t *list);
 
 /*
  * Returns string representing ArrayList in form [0, 1, 2, 3].
- * String is dynamically allocated and must be free. 
- * Null returned if alloc fails of if list pointer is NULL.
- * Size of string will be 3 * length of ArrayList due to [ ,] chars.
+ * String is dynamically allocated and must be freed. 
+ * Null returned if allocation fails or if list pointer is NULL.
  */
 char *arrayListToString(ArrayList_t *list);
 
@@ -128,9 +141,63 @@ char *arrayListToString(ArrayList_t *list);
 bool remDupArrayList(ArrayList_t *list);
 
 /*
- * Makes sure that the arrayList given has the given capacity.
- * Resizes arrayList if needed. Returns false if realloc fails on resize;
+ * Makes sure that the ArrayList given has the given capacity.
+ * Resizes ArrayList if needed. Returns false if reallocation fails on resize;
  */
 bool ensureCapacityArrayList(ArrayList_t *list, int capacity);
+
+/*-------------------------Queue functions-----------------------------*/
+
+/*
+ * Allows ArrayList to be treated as a queue; removes and returns the first 
+ * element in the queue.Produces error if queue is empty, so should always be 
+ * used in if statement checking for this case.
+ */
+//TODO: implement this.
+int dequeueArrayList(ArrayList_t *list);
+
+/*
+ * Allows ArrayList to be treated as a queue; returns first element in the queue
+ * without removing - error if queue is empty.
+ */
+//TODO: implement this.
+int peekArrayList(ArrayList_t *list);
+
+/*
+ * Allows ArrayList to be treated as a queue; Adds new element to the end of
+ * queue - returns false if reallocation fails.
+ */
+//TODO: implement this.
+bool enqueueArrayList(ArrayList_t *list, int elem);
+
+/*--------------------------Set functions------------------------------*/
+
+/*
+ * Returns a new ArrayList that is the union of the two given ArrayLists,
+ * but contains no duplicates - i.e. is a set.
+ */
+//TODO: implement this.
+ArrayList_t *unionArrayList(const ArrayList_t *one, const ArrayList_t *two);
+
+/*
+ * Returns a new ArrayList that is the intersection of the two given ArrayLists,
+ * but contains no duplicates - i.e. is a set.
+ */
+//TODO: implement this.
+ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two);
+
+/*
+ * Returns a new ArrayList that is the set difference of ArrayList one and 
+ * ArrayList two (one - two or one\two). Contains no duplicates.
+ */
+//TODO: implement this.
+ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
+
+/*
+ * Returns true if and only if the two given ArrayList are disjoint,
+ * i.e. they do not contain any of the same elements.
+ */
+//TODO: implement this.
+bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
 #endif
