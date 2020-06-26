@@ -15,6 +15,7 @@ static void checkBoundOrEqual(ArrayList_t *list, int index);
 static void checkNullPointer(ArrayList_t *list);
 static int numDigits(int value);
 static int listStringLength(ArrayList_t *list);
+static void checkEmptyQueue(ArrayList_t *list);
 
 ArrayList_t *createArrayList(void) {
   return newArrayList(0);
@@ -255,6 +256,26 @@ bool ensureCapacityArrayList(ArrayList_t *list, int capacity) {
   return true;  
 }
 
+/*-------------------------Queue functions-----------------------------*/
+
+int dequeueArrayList(ArrayList_t *list) {
+  checkNullPointer(list);
+  checkEmptyQueue(list);
+  return removeArrayList(list, 0);
+}
+
+int peekArrayList(ArrayList_t *list) {
+  checkNullPointer(list);
+  checkEmptyQueue(list);
+  return getArrayList(list, 0);
+}
+
+bool enqueueArrayList(ArrayList_t *list, int elem) {
+  return appendArrayList(list, elem);
+}
+
+/*-------------------------Static functions----------------------------*/
+
 /*
  * Creates empty arrayList with given size.
  * Returns NULL if allocation fails.
@@ -272,6 +293,9 @@ static ArrayList_t *newArrayList(int size) {
   return list;
 }
 
+/*
+ * Returns the number of digits in an integer.
+ */
 static int numDigits(int value) {
   int count = 0;
   
@@ -281,6 +305,9 @@ static int numDigits(int value) {
   return count;
 }
 
+/*
+ * Returns length of char array needed for string representation of ArrayList.
+ */
 static int listStringLength(ArrayList_t *list) {
   int length = EMPTY_BRACKETS_LENGTH;
 
@@ -290,6 +317,9 @@ static int listStringLength(ArrayList_t *list) {
   return length - EMPTY_BRACKETS_LENGTH;
 }
 
+/*
+ * Causes error if index out of bounds but allows index == list->length
+ */
 static void checkBoundOrEqual(ArrayList_t *list, int index) {
   checkNullPointer(list); 
   if (index < 0 || index > list->length)
@@ -333,7 +363,17 @@ static void checkNullPointer(ArrayList_t *list) {
 /*
  * Produces Error, exits program.
  */
+static void checkEmptyQueue(ArrayList_t *list) {
+  if (isEmptyArrayList(list)) {
+    fprintf(stderr, "Queue is empty");
+    exit(EXIT_FAILURE);
+  }
+}  
+
+/*
+ * Produces Error, exits program.
+ */
 static void outOfBoundsError() {
-  fprintf(stderr, "Out of bounds array list access.");
+  fprintf(stderr, "Out of bounds ArrayList access.");
   exit(EXIT_FAILURE);
 }  
