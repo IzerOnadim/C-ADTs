@@ -56,6 +56,25 @@ void printArray(int *arr, int size) {
   printf("]\n");
 }
 
+void removeAllElemTests(void) {
+  int arr[] = {2, 3, 4, 2, 2, 56, 78, 34, 443, 123, 2, 2, 7, 45, 2, 5, 3, 2};
+  
+  ArrayList_t *list = initArrayList(arr, 18);
+  testTrue(removeAllElemArrayList(list, 2));
+  testTrue(!containsArrayList(list, 2));
+  
+  char *str = arrayListToString(list);
+  testToString(list, "[3, 4, 56, 78, 34, 443, 123, 7, 45, 5, 3]");
+  testTrue(!removeAllElemArrayList(list, 2));
+  
+  int len = lengthArrayList(list);
+  testTrue(removeAllElemArrayList(list, 56));
+  testEquals(lengthArrayList(list), len - 1);
+
+  freeArrayList(list);
+  free(str);
+} 
+
 int main(void) {
 
   ArrayList_t *list = createArrayList();
@@ -275,6 +294,9 @@ int main(void) {
   testEquals(lengthArrayList(dupList), 1);
   testToString(dupList, "[21234]");
 
+  printf("\n---------removeAllElemArrayList tests----------------\n\n");
+  removeAllElemTests();
+  
   printf("\n----------------QUEUE FUNCTION TESTS-----------------\n");
 
   printf("\n---------dequeueArrayList tests----------------------\n\n");
@@ -324,4 +346,6 @@ int main(void) {
   free(newArr);
   free(arr2); 
   printf("\n------------------------------------------------------\n\n");
+
+  return EXIT_SUCCESS;
 }

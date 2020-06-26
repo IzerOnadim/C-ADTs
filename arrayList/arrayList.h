@@ -90,11 +90,17 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two);
 bool removeAll(ArrayList_t *one, ArrayList_t *two);
 
 /*
- * Removes all occurrences of given element from given list.
- * Returns true if there was at least one element to remove.
+ * Removes the first occurrence of given elem from arrayList,
+ * returns true if a matching elem was found.
  */
 //TODO: implement this.
 bool removeElemArrayList(ArrayList_t *list, int elem);
+
+/*
+ * Removes all occurrences of given element from given list.
+ * Returns true if there was at least one element to remove.
+ */
+bool removeAllElemArrayList(ArrayList_t *list, int elem);
 
 /*
  * Clears / empties array list, without changing capacity.
