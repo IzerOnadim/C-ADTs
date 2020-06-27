@@ -153,7 +153,17 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two) {
 
 bool removeAll(ArrayList_t *one, ArrayList_t *two);
 
-bool removeElemArrayList(ArrayList_t *list, int elem);
+bool removeElemArrayList(ArrayList_t *list, int elem) {
+  checkNullPointer(list);
+  
+  for (int i = 0; i < list->length; i++) {
+    if ((list->array)[i] == elem) {
+      removeArrayList(list, i);
+      return true; 
+    }
+  }
+  return false;
+}
 
 bool removeAllElemArrayList(ArrayList_t *list, int elem) {
   checkNullPointer(list);
