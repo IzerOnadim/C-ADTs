@@ -86,7 +86,7 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two);
  * Removes all occurrences of every element in ArrayList two, from
  * ArrayList one. Returns true if there was any thing to remove.
  */
-bool removeAll(ArrayList_t *one, ArrayList_t *two);
+bool removeAllArrayList(ArrayList_t *one, ArrayList_t *two);
 
 /*
  * Removes the first occurrence of given elem from arrayList,

@@ -151,7 +151,7 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   return true;
 }
 
-bool removeAll(ArrayList_t *one, ArrayList_t *two) {
+bool removeAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   //should be updated to use a hash map when I create 
   //a hash map data type.
   checkNullPointer(one); checkNullPointer(two);

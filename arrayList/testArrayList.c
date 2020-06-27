@@ -56,6 +56,28 @@ void printArray(int *arr, int size) {
   printf("]\n");
 }
 
+void removeAllTests(void) {
+  int arr1[] = {1, 29, 3, 4, 4, 6, 7, 5, 9, 29, 19, 12};
+  int arr2[] = {13, 19, 4, 500, 345, 2, 4, 5, 6, 10, 1, 12};
+  int arr3[] = {13, 19, 4, 500, 345, 2, 4, 5, 6, 10, 1, 12};
+  
+  ArrayList_t *list1 = initArrayList(arr1, 12);
+  ArrayList_t *list2 = initArrayList(arr2, 12);
+  ArrayList_t *list3 = initArrayList(arr3, 12);
+  
+  testTrue(removeAllArrayList(list1, list2));
+  testTrue(!removeAllArrayList(list1, list2));
+  testTrue(!containsArrayList(list1, 4));
+  testToString(list1, "[29, 3, 7, 9, 29]"); 
+  
+  testTrue(removeAllArrayList(list3, list2));
+  testTrue(isEmptyArrayList(list3));
+
+  freeArrayList(list1);
+  freeArrayList(list2);
+  freeArrayList(list3);
+}
+
 void removeElemTests(void) {
   int arr[] = {1, 2, 3, 13, 456, 768};  
   ArrayList_t *list = initArrayList(arr, 6);
@@ -308,6 +330,9 @@ int main(void) {
   testTrue(remDupArrayList(dupList));
   testEquals(lengthArrayList(dupList), 1);
   testToString(dupList, "[21234]");
+
+  printf("\n---------removeAllArrayList tests----------------\n\n");
+  removeAllTests(); 
 
   printf("\n---------removeElemArrayList tests-------------------\n\n");
   removeElemTests();
