@@ -56,6 +56,21 @@ void printArray(int *arr, int size) {
   printf("]\n");
 }
 
+void removeElemTests(void) {
+  int arr[] = {1, 2, 3, 13, 456, 768};  
+  ArrayList_t *list = initArrayList(arr, 6);
+  int len = lengthArrayList(list);
+  testTrue(!removeElemArrayList(list, 4));
+  testTrue(removeElemArrayList(list, 2));
+  testEquals(lengthArrayList(list), len - 1);
+  testTrue(removeElemArrayList(list, 768));
+  testToString(list, "[1, 3, 13, 456]");
+  testTrue(removeElemArrayList(list, 456));
+  testToString(list, "[1, 3, 13]");
+  testEquals(lengthArrayList(list), 3);
+  freeArrayList(list);
+}
+
 void removeAllElemTests(void) {
   int arr[] = {2, 3, 4, 2, 2, 56, 78, 34, 443, 123, 2, 2, 7, 45, 2, 5, 3, 2};
   
@@ -294,6 +309,9 @@ int main(void) {
   testEquals(lengthArrayList(dupList), 1);
   testToString(dupList, "[21234]");
 
+  printf("\n---------removeElemArrayList tests-------------------\n\n");
+  removeElemTests();
+  
   printf("\n---------removeAllElemArrayList tests----------------\n\n");
   removeAllElemTests();
   
