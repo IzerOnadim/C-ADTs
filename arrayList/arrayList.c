@@ -151,7 +151,22 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   return true;
 }
 
-bool removeAll(ArrayList_t *one, ArrayList_t *two);
+bool removeAll(ArrayList_t *one, ArrayList_t *two) {
+  //should be updated to use a hash map when I create 
+  //a hash map data type.
+  checkNullPointer(one); checkNullPointer(two);
+  bool found = false;
+
+  for (int i = 0; i < one->length;) {
+    if (containsArrayList(two, (one->array)[i])) {
+      removeArrayList(one, i);
+      found = true;
+    } else { 
+      i++;
+    }
+  }
+  return found; 
+}
 
 bool removeElemArrayList(ArrayList_t *list, int elem) {
   checkNullPointer(list);
@@ -243,6 +258,8 @@ char *arrayListToString(ArrayList_t *list) {
 }
 
 bool remDupArrayList(ArrayList_t *list) {
+  //should be updated to use a hash map when I create 
+  //a hash map data type.
   checkNullPointer(list);
   
   bool dup = false;

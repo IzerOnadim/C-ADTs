@@ -92,7 +92,6 @@ bool removeAll(ArrayList_t *one, ArrayList_t *two);
  * Removes the first occurrence of given elem from arrayList,
  * returns true if a matching elem was found.
  */
-//TODO: implement this.
 bool removeElemArrayList(ArrayList_t *list, int elem);
 
 /*
@@ -152,21 +151,18 @@ bool ensureCapacityArrayList(ArrayList_t *list, int capacity);
  * element in the queue.Produces error if queue is empty, so should always be 
  * used in if statement checking for this case.
  */
-//TODO: implement this.
 int dequeueArrayList(ArrayList_t *list);
 
 /*
  * Allows ArrayList to be treated as a queue; returns first element in the queue
  * without removing - error if queue is empty.
  */
-//TODO: implement this.
 int peekArrayList(ArrayList_t *list);
 
 /*
  * Allows ArrayList to be treated as a queue; Adds new element to the end of
  * queue - returns false if reallocation fails.
  */
-//TODO: implement this.
 bool enqueueArrayList(ArrayList_t *list, int elem);
 
 /*--------------------------Set functions------------------------------*/
