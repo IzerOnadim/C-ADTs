@@ -83,6 +83,13 @@ int indexOfArrayList(ArrayList_t *list, int elem);
 bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two);
 
 /*
+ * Appends elem to the ArrayList if a matching element is not already in
+ * the list. Returns true if the element was successfully added, i.e. if
+ * there was no matching elem and reallocation in append was successful.
+ */
+bool appendIfNotContains_AL(ArrayList_t *list, int elem);
+
+/*
  * Removes all occurrences of every element in ArrayList two, from
  * ArrayList one. Returns true if there was any thing to remove.
  */
