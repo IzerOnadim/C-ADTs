@@ -78,6 +78,25 @@ void removeAllTests(void) {
   freeArrayList(list3);
 }
 
+void appendIfNotContainsTests() {
+  int len = 9;
+  int arr[] = {4, 3, 2, 6, 12, 789, 234, 2, 30}; 
+  ArrayList_t *list = initArrayList(arr, len);
+  
+  testTrue(!appendIfNotContains_AL(list, 789));
+  testEquals(lengthArrayList(list), len);
+  
+  testTrue(appendIfNotContains_AL(list, 14));
+  testEquals(lengthArrayList(list), len + 1);
+  testTrue(appendIfNotContains_AL(list, 300));
+  testEquals(lengthArrayList(list), len + 2);
+  testTrue(!appendIfNotContains_AL(list, 14));
+  testEquals(lengthArrayList(list), len + 2);
+  testToString(list, "[4, 3, 2, 6, 12, 789, 234, 2, 30, 14, 300]");
+
+  freeArrayList(list);
+}
+
 void removeElemTests(void) {
   int arr[] = {1, 2, 3, 13, 456, 768};  
   ArrayList_t *list = initArrayList(arr, 6);
@@ -302,6 +321,9 @@ int main(void) {
   testTrue(!containsArrayList(other, 1));
   testToString(other, "[2, 3]");
 
+  printf("\n---------appendIfNotContains_AL tests----------------\n\n");
+  appendIfNotContainsTests();
+  
   printf("\n---------ensureCapacityArrayList tests---------------\n\n");
   testTrue(ensureCapacityArrayList(other, 5));
   testEquals(other->size, 5);
