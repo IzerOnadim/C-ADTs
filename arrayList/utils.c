@@ -80,7 +80,7 @@ bool doubleCapacityIfNeeded(ArrayList_t *list) {
 /*
  * Gives error if pointer is NULL.
  */
-void checkNullPointer(ArrayList_t *list) {
+void checkNullPointer(const ArrayList_t *list) {
   if (!list) {
     fprintf(stderr, ANSI_COLOR_RED 
         "\nERROR: Null pointer given.\n\n" ANSI_COLOR_RESET);

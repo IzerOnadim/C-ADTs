@@ -19,7 +19,7 @@ bool doubleCapacityIfNeeded(ArrayList_t *list);
 void outOfBoundsError();
 void checkBounds(ArrayList_t *list, int index);
 void checkBoundOrEqual(ArrayList_t *list, int index);
-void checkNullPointer(ArrayList_t *list);
+void checkNullPointer(const ArrayList_t *list);
 int numDigits(int value);
 int listStringLength(ArrayList_t *list);
 void checkEmptyQueue(ArrayList_t *list);
