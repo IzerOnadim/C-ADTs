@@ -151,7 +151,15 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   return true;
 }
 
-bool appendIfNotContains_AL(ArrayList_t *list, int elem); 
+bool appendIfNotContains_AL(ArrayList_t *list, int elem) {
+  checkNullPointer(list);
+  bool appended = false;
+
+  if ((appended = !containsArrayList(list, elem)))
+    appended = appended && appendArrayList(list, elem);
+
+  return appended;
+}
 
 bool removeAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   //should be updated to use a hash map when I create 
