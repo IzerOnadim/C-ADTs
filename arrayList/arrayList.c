@@ -151,6 +151,8 @@ bool appendAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   return true;
 }
 
+bool appendIfNotContains_AL(ArrayList_t *list, int elem); 
+
 bool removeAllArrayList(ArrayList_t *one, ArrayList_t *two) {
   //should be updated to use a hash map when I create 
   //a hash map data type.
@@ -311,7 +313,23 @@ bool enqueueArrayList(ArrayList_t *list, int elem) {
 
 /*--------------------------Set functions------------------------------*/
 
-ArrayList_t *unionArrayList(const ArrayList_t *one, const ArrayList_t *two);
+ArrayList_t *unionArrayList(const ArrayList_t *one, const ArrayList_t *two) {
+  
+  checkNullPointer(one); checkNullPointer(two);
+
+  ArrayList_t *list = newArrayList(one->length + two->length);
+  if (!list) return NULL;
+
+  //There's probably a better way to do this.
+  for (int i = 0; i < one->length; i++)
+    appendIfNotContains_AL(list, (one->array)[i]);
+    
+  for (int i = 0; i < two->length; i++)
+    appendIfNotContains_AL(list, (two->array)[i]);
+
+  return list;
+}
+
 ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two);
 ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
 bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
