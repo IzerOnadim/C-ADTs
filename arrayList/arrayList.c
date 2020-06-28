@@ -78,7 +78,7 @@ bool containsArrayList(ArrayList_t *list, int elem) {
   return false;
 }
 
-bool equalsArrayList(ArrayList_t *one, ArrayList_t *two) {
+bool equalArrayLists(ArrayList_t *one, ArrayList_t *two) {
   
   checkNullPointer(one); checkNullPointer(two); 
   

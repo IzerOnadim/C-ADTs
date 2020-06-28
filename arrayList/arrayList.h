@@ -50,7 +50,7 @@ bool containsArrayList(ArrayList_t *list, int elem);
 /*
  * Returns true if the two given ArrayLists are equal.
  */
-bool equalsArrayList(ArrayList_t *one, ArrayList_t *two); 
+bool equalArrayLists(ArrayList_t *one, ArrayList_t *two); 
 
 /*
  * Returns element at given index, gives out of bounds error.

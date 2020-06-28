@@ -35,8 +35,8 @@ bool testEqualsLine(int one, int two, int line) {
 void testToString(ArrayList_t *list, char *expected) {
   char *actual = arrayListToString(list);
   if (!testTrue(!strcmp(actual, expected))) {
-    printf("Expected: %s\n", expected);
-    printf("Actual:   %s\n", actual); 
+    printf(ANSI_COLOR_GREEN"  Expected: %s\n"ANSI_COLOR_RESET, expected);
+    printf(ANSI_COLOR_RED"  Actual:   %s\n"ANSI_COLOR_RESET, actual); 
   }
   free(actual);
 }
@@ -101,6 +101,7 @@ void removeElemTests(void) {
   int arr[] = {1, 2, 3, 13, 456, 768};  
   ArrayList_t *list = initArrayList(arr, 6);
   int len = lengthArrayList(list);
+  
   testTrue(!removeElemArrayList(list, 4));
   testTrue(removeElemArrayList(list, 2));
   testEquals(lengthArrayList(list), len - 1);
@@ -129,7 +130,44 @@ void removeAllElemTests(void) {
 
   freeArrayList(list);
   free(str);
-} 
+}
+
+void unionTests() {
+  int arr1[] = {14, 72, 3, 72, 2, 5, 4, 5, 9};
+  int arr2[] = {13, 3, 10};
+  int arr3[] = {1};
+
+  ArrayList_t *list1 = initArrayList(arr1, 9);
+  ArrayList_t *list2 = initArrayList(arr2, 3);
+  ArrayList_t *list3 = initArrayList(arr3, 0);
+
+  ArrayList_t *oneUnionTwo = unionArrayList(list1, list2);
+  ArrayList_t *twoUnionThree = unionArrayList(list3, list2);
+  ArrayList_t *twoUnionTwo = unionArrayList(list2, list2);
+  ArrayList_t *threeUnionThree = unionArrayList(list3, list3);
+
+  testTrue(containsArrayList(oneUnionTwo, 72));
+  testTrue(containsArrayList(oneUnionTwo, 10));
+  testToString(oneUnionTwo, "[14, 72, 3, 2, 5, 4, 9, 13, 10]");
+  
+  testTrue(containsArrayList(twoUnionThree, 13));
+  testTrue(containsArrayList(twoUnionThree, 3));
+  testTrue(containsArrayList(twoUnionThree, 10));
+  testTrue(!containsArrayList(twoUnionThree, 1));
+  testToString(twoUnionThree, "[13, 3, 10]");
+
+  testTrue(equalArrayLists(twoUnionTwo, list2));
+  testTrue(equalArrayLists(threeUnionThree, list3));
+  testEquals(lengthArrayList(threeUnionThree), 0);
+
+  freeArrayList(oneUnionTwo);
+  freeArrayList(twoUnionThree);
+  freeArrayList(twoUnionTwo);
+  freeArrayList(threeUnionThree);
+  freeArrayList(list1);
+  freeArrayList(list2);
+  freeArrayList(list3);
+}
 
 int main(void) {
 
@@ -186,28 +224,28 @@ int main(void) {
   removeArrayList(list, 0);
   testEquals(lengthArrayList(list), 0);
   
-  printf("\n---------equalsArrayList tests------------------------\n\n");
+  printf("\n---------equalArrayLists tests------------------------\n\n");
   ArrayList_t *other = createArrayList();
-  testTrue(equalsArrayList(list, other));
+  testTrue(equalArrayLists(list, other));
   appendArrayList(other, 1); 
-  testTrue(!equalsArrayList(list, other));
+  testTrue(!equalArrayLists(list, other));
   appendArrayList(other, 2); 
   appendArrayList(list, 1); 
   appendArrayList(list, 2); 
-  testTrue(equalsArrayList(list, other));
+  testTrue(equalArrayLists(list, other));
   appendArrayList(list, 2); 
-  testTrue(!equalsArrayList(list, other));
+  testTrue(!equalArrayLists(list, other));
   appendArrayList(other, 2); 
-  testTrue(equalsArrayList(list, other));
+  testTrue(equalArrayLists(list, other));
   removeArrayList(list, 2);
-  testTrue(!equalsArrayList(list, other));
+  testTrue(!equalArrayLists(list, other));
   removeArrayList(other, 1);
-  testTrue(equalsArrayList(list, other));
+  testTrue(equalArrayLists(list, other));
   removeArrayList(other, 0);
   removeArrayList(other, 0);
   removeArrayList(list, 0);
   removeArrayList(list, 0);
-  testTrue(equalsArrayList(list, other));
+  testTrue(equalArrayLists(list, other));
   
   printf("\n---------getArrayList tests--------------------------\n\n");
   appendArrayList(list, 13);
@@ -287,14 +325,14 @@ int main(void) {
   printf("\n---------cloneArrayList tests------------------------\n\n");
   ArrayList_t *clonedList = cloneArrayList(list);
   testTrue(clonedList != list); 
-  testTrue(equalsArrayList(list, clonedList));
+  testTrue(equalArrayLists(list, clonedList));
   appendArrayList(list, 1); 
   appendArrayList(list, 2); 
   appendArrayList(list, 3); 
   appendArrayList(list, 4); 
   ArrayList_t *clonedList1 = cloneArrayList(list);
   testTrue(clonedList1 != list); 
-  testTrue(equalsArrayList(list, clonedList1));
+  testTrue(equalArrayLists(list, clonedList1));
   testTrue(containsArrayList(clonedList1, 1));
   testTrue(containsArrayList(clonedList1, 2));
   testTrue(containsArrayList(clonedList1, 3));
@@ -388,6 +426,11 @@ int main(void) {
   testTrue(enqueueArrayList(dupList, 15));
   testEquals(lengthArrayList(dupList), 1);
   testToString(dupList, "[15]"); 
+  
+  printf("\n-----------------SET FUNCTION TESTS------------------\n");
+  
+  printf("\n---------unionArrayList tests------------------------\n\n");
+  unionTests();
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
