@@ -149,7 +149,7 @@ bool remDupArrayList(ArrayList_t *list);
  * Returns new ArrayList which is the same as the one given except with 
  * duplicate elements removed. Inspired by Haskell function of the same name.
  */
-ArrayList_t *nub(const ArrayList_t *list);
+ArrayList_t *nub_AL(const ArrayList_t *list);
 
 /*
  * Makes sure that the ArrayList given has the given capacity.

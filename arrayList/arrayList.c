@@ -289,7 +289,7 @@ bool remDupArrayList(ArrayList_t *list) {
   return dup;
 }
 
-ArrayList_t *nub(const ArrayList_t *list) {
+ArrayList_t *nub_AL(const ArrayList_t *list) {
   checkNullPointer(list);
   
   ArrayList_t *copy = cloneArrayList(list);

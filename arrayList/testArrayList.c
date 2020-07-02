@@ -234,9 +234,9 @@ void nubTests() {
   ArrayList_t *list1 = initArrayList(arr1, 12);
   ArrayList_t *list2 = initArrayList(arr2, 3);
   ArrayList_t *list3 = createArrayList();
-  ArrayList_t *nub1 = nub(list1);
-  ArrayList_t *nub2 = nub(list2);
-  ArrayList_t *nub3 = nub(list3);
+  ArrayList_t *nub1 = nub_AL(list1);
+  ArrayList_t *nub2 = nub_AL(list2);
+  ArrayList_t *nub3 = nub_AL(list3);
 
   testToString(nub1, "[23, 32, 3, 4, 45, 90]");
   testTrue(equalArrayLists(list2, nub2));
