@@ -204,6 +204,29 @@ void intersectionTests() {
   freeArrayList(threeInterOne);
 }
 
+void disjointTests() {
+  int arr1[] = {23, 12, 55, 755, 5, 6, 75, 4, 3, 10};
+  int arr2[] = {12, 21, 3, 5, 6, 34, 3, 2, 9};
+  int arr3[] = {30, 40, 50, 60, 44, 8, 45, 98, 8};
+
+  ArrayList_t *list1 = initArrayList(arr1, 10);
+  ArrayList_t *list2 = initArrayList(arr2, 9);
+  ArrayList_t *list3 = initArrayList(arr3, 9);
+  ArrayList_t *list4 = createArrayList();
+
+  testTrue(!disjointArrayList(list1, list2));
+  testTrue(disjointArrayList(list2, list3));
+  testTrue(disjointArrayList(list3, list1));
+  testTrue(disjointArrayList(list1, list4));
+  testTrue(disjointArrayList(list4, list2));
+  testTrue(disjointArrayList(list3, list4));
+
+  freeArrayList(list1);
+  freeArrayList(list2);
+  freeArrayList(list3);
+  freeArrayList(list4);
+}
+
 int main(void) {
 
   ArrayList_t *list = createArrayList();
@@ -469,6 +492,9 @@ int main(void) {
 
   printf("\n---------intersectionArrayList tests-----------------\n\n");
   intersectionTests();
+
+  printf("\n---------disjointArrayList tests---------------------\n\n");
+  disjointTests();
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
