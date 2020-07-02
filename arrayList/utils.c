@@ -21,6 +21,13 @@ ArrayList_t *newArrayList(int size) {
 }
 
 /*
+ * Returns the smaller of two integers.
+ */
+int min(int one, int two) {
+  return one < two ? one : two; 
+}
+
+/*
  * Returns the number of digits in an integer.
  */
 int numDigits(int value) {

@@ -23,5 +23,6 @@ void checkNullPointer(const ArrayList_t *list);
 int numDigits(int value);
 int listStringLength(ArrayList_t *list);
 void checkEmptyQueue(ArrayList_t *list);
+int min(int one, int two);
 
 #endif
