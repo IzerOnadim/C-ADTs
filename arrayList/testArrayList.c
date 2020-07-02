@@ -169,6 +169,42 @@ void unionTests() {
   freeArrayList(list3);
 }
 
+void intersectionTests() {
+  int arr1[] = {12, 12, 345, 23, 1, 3, 12, 2, 3, 8, 90, 43, 90, 15, 15};
+  int arr2[] = {13, 14, 222, 31, 12, 3, 8, 90, 25, 23, 19, 3, 12, 14};
+  int arr3[] = {0};
+
+  ArrayList_t *list1 = initArrayList(arr1, 15);
+  ArrayList_t *list2 = initArrayList(arr2, 14);
+  ArrayList_t *list3 = initArrayList(arr3, 0);
+  ArrayList_t *oneInterTwo = intersectArrayList(list1, list2);
+  ArrayList_t *twoInterOne = intersectArrayList(list2, list1);
+  ArrayList_t *twoInterThree = intersectArrayList(list2, list3);
+  ArrayList_t *threeInterOne = intersectArrayList(list3, list1);
+  
+  testTrue(containsArrayList(oneInterTwo, 12));
+  testTrue(!containsArrayList(oneInterTwo, 43));
+  testTrue(!containsArrayList(oneInterTwo, 15));
+  testEquals(lengthArrayList(oneInterTwo), 5);
+  testEquals(lengthArrayList(oneInterTwo), lengthArrayList(twoInterOne));
+  testToString(oneInterTwo, "[12, 23, 3, 8, 90]");
+  testToString(twoInterOne, "[12, 3, 8, 90, 23]");
+
+  //Add a set equality test here when setEquals is written.
+
+  testTrue(isEmptyArrayList(twoInterThree));
+  testTrue(isEmptyArrayList(threeInterOne));
+
+  freeArrayList(list1);
+  freeArrayList(list2);
+  freeArrayList(list3);
+  freeArrayList(oneInterTwo);
+  freeArrayList(twoInterOne);
+  freeArrayList(twoInterThree);
+  freeArrayList(threeInterOne);
+  
+  }
+
 int main(void) {
 
   ArrayList_t *list = createArrayList();
@@ -431,6 +467,9 @@ int main(void) {
   
   printf("\n---------unionArrayList tests------------------------\n\n");
   unionTests();
+
+  printf("\n---------intersectionArrayList tests-----------------\n\n");
+  intersectionTests();
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
