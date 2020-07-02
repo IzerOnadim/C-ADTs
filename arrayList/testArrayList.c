@@ -202,8 +202,7 @@ void intersectionTests() {
   freeArrayList(twoInterOne);
   freeArrayList(twoInterThree);
   freeArrayList(threeInterOne);
-  
-  }
+}
 
 int main(void) {
 

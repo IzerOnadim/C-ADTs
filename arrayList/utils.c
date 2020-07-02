@@ -3,10 +3,6 @@
 
 #include "utils.h"
 
-/*
- * Creates empty arrayList with given size.
- * Returns NULL if allocation fails.
- */
 ArrayList_t *newArrayList(int size) {
 
   ArrayList_t *list = (ArrayList_t *) malloc(sizeof(ArrayList_t));
@@ -20,16 +16,10 @@ ArrayList_t *newArrayList(int size) {
   return list;
 }
 
-/*
- * Returns the smaller of two integers.
- */
 int min(int one, int two) {
   return one < two ? one : two; 
 }
 
-/*
- * Returns the number of digits in an integer.
- */
 int numDigits(int value) {
   int count = 0;
   
@@ -39,9 +29,6 @@ int numDigits(int value) {
   return count;
 }
 
-/*
- * Returns length of char array needed for string representation of ArrayList.
- */
 int listStringLength(ArrayList_t *list) {
   int length = EMPTY_BRACKETS_LENGTH;
 
@@ -51,27 +38,18 @@ int listStringLength(ArrayList_t *list) {
   return length - EMPTY_BRACKETS_LENGTH;
 }
 
-/*
- * Causes error if index out of bounds but allows index == list->length
- */
 void checkBoundOrEqual(ArrayList_t *list, int index) {
   checkNullPointer(list); 
   if (index < 0 || index > list->length)
     outOfBoundsError();
 }
 
-/*
- * Causes error if an index is out of bounds.
- */
 void checkBounds(ArrayList_t *list, int index) {
   checkNullPointer(list); 
   if (index < 0 || index >= list->length)
     outOfBoundsError();
 }
 
-/*
- * double size of array if out of space. 
- */
 bool doubleCapacityIfNeeded(ArrayList_t *list) {
  
   checkNullPointer(list); //Produces error if list is NULL pointer. 
@@ -84,9 +62,6 @@ bool doubleCapacityIfNeeded(ArrayList_t *list) {
   return true;
 }
 
-/*
- * Gives error if pointer is NULL.
- */
 void checkNullPointer(const ArrayList_t *list) {
   if (!list) {
     fprintf(stderr, ANSI_COLOR_RED 
@@ -95,9 +70,6 @@ void checkNullPointer(const ArrayList_t *list) {
   }
 }
 
-/*
- * Produces Error, exits program.
- */
 void checkEmptyQueue(ArrayList_t *list) {
   if (list->length == 0) {
     fprintf(stderr, ANSI_COLOR_RED 
@@ -106,9 +78,6 @@ void checkEmptyQueue(ArrayList_t *list) {
   }
 }  
 
-/*
- * Produces Error, exits program.
- */
 void outOfBoundsError() {
   fprintf(stderr, ANSI_COLOR_RED 
       "\nERROR: Out of bounds ArrayList access.\n\n" ANSI_COLOR_RESET);
