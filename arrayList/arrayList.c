@@ -68,7 +68,7 @@ int lengthArrayList(ArrayList_t *list) {
   return list->length;
 }
 
-bool containsArrayList(ArrayList_t *list, int elem) {
+bool containsArrayList(const ArrayList_t *list, int elem) {
   
   checkNullPointer(list); //Produces error if list is NULL pointer. 
   
@@ -338,7 +338,21 @@ ArrayList_t *unionArrayList(const ArrayList_t *one, const ArrayList_t *two) {
   return list;
 }
 
-ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two);
+ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two) {
+  checkNullPointer(one); checkNullPointer(two);
+
+  ArrayList_t *list = newArrayList(min(one->length, two->length));
+  if (!list) return NULL;
+
+  for (int i = 0; i < one->length; i++) {
+    int elem = (one->array)[i];
+    if (containsArrayList(two, elem))
+      appendIfNotContains_AL(list, elem);
+  }
+
+  return list;
+} 
+
 ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
 bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
 

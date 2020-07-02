@@ -45,7 +45,7 @@ int lengthArrayList(ArrayList_t *list);
 /*
  * Returns true if given list contains given element.
  */
-bool containsArrayList(ArrayList_t *list, int elem);
+bool containsArrayList(const ArrayList_t *list, int elem);
 
 /*
  * Returns true if the two given ArrayLists are equal.
@@ -178,14 +178,12 @@ bool enqueueArrayList(ArrayList_t *list, int elem);
  * Returns a new ArrayList that is the union of the two given ArrayLists,
  * but contains no duplicates - i.e. is a set.
  */
-//TODO: implement this.
 ArrayList_t *unionArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
 /*
  * Returns a new ArrayList that is the intersection of the two given ArrayLists,
  * but contains no duplicates - i.e. is a set.
  */
-//TODO: implement this.
 ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
 /*
