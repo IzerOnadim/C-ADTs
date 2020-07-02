@@ -227,6 +227,29 @@ void disjointTests() {
   freeArrayList(list4);
 }
 
+void nubTests() {
+  int arr1[] = {23, 32, 3, 4, 45, 90, 23, 3, 3, 4, 45, 45};
+  int arr2[] = {1, 2, 3};
+  
+  ArrayList_t *list1 = initArrayList(arr1, 12);
+  ArrayList_t *list2 = initArrayList(arr2, 3);
+  ArrayList_t *list3 = createArrayList();
+  ArrayList_t *nub1 = nub(list1);
+  ArrayList_t *nub2 = nub(list2);
+  ArrayList_t *nub3 = nub(list3);
+
+  testToString(nub1, "[23, 32, 3, 4, 45, 90]");
+  testTrue(equalArrayLists(list2, nub2));
+  testTrue(equalArrayLists(list3, nub3));
+
+  freeArrayList(list1);
+  freeArrayList(list2);
+  freeArrayList(list3);
+  freeArrayList(nub1);
+  freeArrayList(nub2);
+  freeArrayList(nub3);
+} 
+
 int main(void) {
 
   ArrayList_t *list = createArrayList();
@@ -448,6 +471,9 @@ int main(void) {
   testTrue(remDupArrayList(dupList));
   testEquals(lengthArrayList(dupList), 1);
   testToString(dupList, "[21234]");
+
+  printf("\n---------nubArrayList tests----------------------\n\n");
+  nubTests(); 
 
   printf("\n---------removeAllArrayList tests----------------\n\n");
   removeAllTests(); 
