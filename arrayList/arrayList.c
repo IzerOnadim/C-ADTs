@@ -354,5 +354,14 @@ ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two) 
 } 
 
 ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
-bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
+
+bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two) {
+  checkNullPointer(one); checkNullPointer(two);
+    
+  for (int i = 0; i < one->length; i++) {
+    if (containsArrayList(two, (one->array)[i]))
+      return false;  
+  }
+  return true;
+}
 

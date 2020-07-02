@@ -194,10 +194,9 @@ ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two);
 ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
 /*
- * Returns true if and only if the two given ArrayList are disjoint,
+ * Returns true if and only if the two given ArrayLists are disjoint,
  * i.e. they do not contain any of the same elements.
  */
-//TODO: implement this.
 bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
 #endif
