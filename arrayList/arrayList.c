@@ -206,7 +206,7 @@ bool removeAllElemArrayList(ArrayList_t *list, int elem) {
   return found;
 }
 
-ArrayList_t *cloneArrayList(ArrayList_t *list) {
+ArrayList_t *cloneArrayList(const ArrayList_t *list) {
   
   checkNullPointer(list);
   
@@ -233,7 +233,7 @@ ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end) {
   return subList;
 }
 
-int *arrayListToArray(ArrayList_t *list) {
+int *arrayListToArray(const ArrayList_t *list) {
   
   checkNullPointer(list); //Produces error if list is NULL pointer. 
   
@@ -287,6 +287,15 @@ bool remDupArrayList(ArrayList_t *list) {
 
   freeArrayList(seen); 
   return dup;
+}
+
+ArrayList_t *nub(const ArrayList_t *list) {
+  checkNullPointer(list);
+  
+  ArrayList_t *copy = cloneArrayList(list);
+  remDupArrayList(copy);
+
+  return copy;
 }
 
 bool ensureCapacityArrayList(ArrayList_t *list, int capacity) {
@@ -364,4 +373,10 @@ bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two) {
   }
   return true;
 }
+
+//bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two) {
+//  checkNullPointer(one); checkNullPointer(two);
+//  
+//  for ()
+//}
 

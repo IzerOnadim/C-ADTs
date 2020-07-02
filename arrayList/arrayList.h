@@ -116,7 +116,7 @@ void clearArrayList(ArrayList_t *list);
  * Creates and returns a new, identical ArrayList to the one given.
  * Returns NULL if allocation fails.
  */
-ArrayList_t *cloneArrayList(ArrayList_t *list);
+ArrayList_t *cloneArrayList(const ArrayList_t *list);
 
 /*
  * Creates and returns a new ArrayList that is a sub-list of the given one,
@@ -130,7 +130,7 @@ ArrayList_t *subListArrayList(ArrayList_t *list, int start, int end);
  * allocated and must be freed. Returns  null pointer if allocation fails.
  * Array size will be the same as the length of the arrayList.
  */
-int *arrayListToArray(ArrayList_t *list);
+int *arrayListToArray(const ArrayList_t *list);
 
 /*
  * Returns string representing ArrayList in form [0, 1, 2, 3].
@@ -144,6 +144,12 @@ char *arrayListToString(ArrayList_t *list);
  * of element. Returns true if and only if there were any duplicates.
  */
 bool remDupArrayList(ArrayList_t *list);
+
+/*
+ * Returns new ArrayList which is the same as the one given except with 
+ * duplicate elements removed. Inspired by Haskell function of the same name.
+ */
+ArrayList_t *nub(const ArrayList_t *list);
 
 /*
  * Makes sure that the ArrayList given has the given capacity.
@@ -198,5 +204,12 @@ ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
  * i.e. they do not contain any of the same elements.
  */
 bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
+
+/*
+ * Returns true if the given ArrayLists are equal as sets - If they contain the 
+ * same elements as eachother - ignoring duplicates and the order of elements.
+ */
+//TODO: implement this.
+bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two);
 
 #endif
