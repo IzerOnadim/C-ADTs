@@ -209,7 +209,12 @@ bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two);
  * Returns true if the given ArrayLists are equal as sets - If they contain the 
  * same elements as eachother - ignoring duplicates and the order of elements.
  */
-//TODO: implement this.
 bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two);
+
+/*
+ * Returns true if and only if the given ArrayList is a set, 
+ * i.e. contains no duplicates.
+ */
+bool isSet_AL(const ArrayList_t *list);
 
 #endif
