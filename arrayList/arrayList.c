@@ -362,6 +362,7 @@ ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two) 
   return list;
 } 
 
+//TODO: implement this.
 ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
 bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two) {
@@ -387,4 +388,7 @@ bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two) {
 
   return isEmptyArrayList(copy);
 }
+
+//TODO: implement this.
+bool isSet_AL(const ArrayList_t *list);
 
