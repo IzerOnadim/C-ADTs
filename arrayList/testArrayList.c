@@ -190,7 +190,7 @@ void intersectionTests() {
   testToString(oneInterTwo, "[12, 23, 3, 8, 90]");
   testToString(twoInterOne, "[12, 3, 8, 90, 23]");
 
-  //Add a set equality test here when setEquals is written.
+  testTrue(setEquality_AL(oneInterTwo, twoInterOne));
 
   testTrue(isEmptyArrayList(twoInterThree));
   testTrue(isEmptyArrayList(threeInterOne));
@@ -249,6 +249,45 @@ void nubTests() {
   freeArrayList(nub2);
   freeArrayList(nub3);
 } 
+
+void setEqualityTests() {
+  int arr1[] = {1, 3, 4, 3, 7, 45, 23, 76, 231, 12, 11};
+  int arr2[] = {76, 76, 3, 7, 231, 12, 12, 11, 45, 23, 1, 4, 23, 4};
+  int arr3[] = {1, 2, 34, 52, 2};
+  int arr4[] = {1, 3, 4, 3, 7, 45, 23, 76, 231, 12, 11, 2};
+
+  ArrayList_t *list1 = initArrayList(arr1, 11);
+  ArrayList_t *list2 = initArrayList(arr2, 14);
+  ArrayList_t *list3 = initArrayList(arr3, 5);  
+  ArrayList_t *list4 = initArrayList(arr4, 12);
+  ArrayList_t *list5 = createArrayList();  
+
+  testTrue(setEquality_AL(list1, list2));
+  testTrue(setEquality_AL(list2, list1));
+  testTrue(setEquality_AL(list1, list1));  
+  testTrue(setEquality_AL(list5, list5));  
+
+  testTrue(!setEquality_AL(list1, list3));  
+  testTrue(!setEquality_AL(list3, list1));  
+  testTrue(!setEquality_AL(list1, list4));  
+  testTrue(!setEquality_AL(list1, list5));  
+  testTrue(!setEquality_AL(list5, list1));  
+  testTrue(!setEquality_AL(list2, list3));  
+  testTrue(!setEquality_AL(list2, list4));  
+  testTrue(!setEquality_AL(list2, list5));  
+
+  testToString(list1, "[1, 3, 4, 3, 7, 45, 23, 76, 231, 12, 11]");
+  testToString(list2, "[76, 76, 3, 7, 231, 12, 12, 11, 45, 23, 1, 4, 23, 4]");
+  testToString(list3, "[1, 2, 34, 52, 2]");
+  testToString(list4, "[1, 3, 4, 3, 7, 45, 23, 76, 231, 12, 11, 2]");
+  testToString(list5, "[]");
+
+  freeArrayList(list1);
+  freeArrayList(list2);
+  freeArrayList(list3);
+  freeArrayList(list4);
+  freeArrayList(list5);
+}
 
 int main(void) {
 
@@ -521,6 +560,9 @@ int main(void) {
 
   printf("\n---------disjointArrayList tests---------------------\n\n");
   disjointTests();
+
+  printf("\n---------setEquality_AL tests------------------------\n\n");
+  setEqualityTests();
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);

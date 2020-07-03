@@ -58,7 +58,7 @@ int removeArrayList(ArrayList_t *list, int index) {
   return value;  
 }
 
-bool isEmptyArrayList(ArrayList_t *list) {
+bool isEmptyArrayList(const ArrayList_t *list) {
   checkNullPointer(list); //Produces error if list is NULL pointer. 
   return list->length == 0;
 }
@@ -377,6 +377,9 @@ bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two) {
 bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two) {
   checkNullPointer(one); checkNullPointer(two);
   
+  if (isEmptyArrayList(two))
+    return isEmptyArrayList(one);
+
   ArrayList_t *copy = nub_AL(two);
    
   for (int i = 0; i < one->length; i++)

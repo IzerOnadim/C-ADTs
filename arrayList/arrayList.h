@@ -35,7 +35,7 @@ int removeArrayList(ArrayList_t *list, int index);
 /*
  * Returns true if there are no elements in the given list.
  */
-bool isEmptyArrayList(ArrayList_t *list);
+bool isEmptyArrayList(const ArrayList_t *list);
 
 /*
  * Returns the length of the array list;
