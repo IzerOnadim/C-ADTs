@@ -374,9 +374,14 @@ bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two) {
   return true;
 }
 
-//bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two) {
-//  checkNullPointer(one); checkNullPointer(two);
-//  
-//  for ()
-//}
+bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two) {
+  checkNullPointer(one); checkNullPointer(two);
+  
+  ArrayList_t *copy = nub_AL(two);
+   
+  for (int i = 0; i < one->length; i++)
+    removeAllElemArrayList(copy, (one->array)[i]);
+
+  return isEmptyArrayList(copy);
+}
 
