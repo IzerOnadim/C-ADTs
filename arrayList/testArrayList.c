@@ -6,16 +6,37 @@
 #include "utils.h"
 #include "arrayList.h"
 
-#define MAX_LINE_LENGTH (50)
+#define MAX_LINE_LENGTH (80)
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #define testTrue(a) testTrueLine(a, __LINE__)
 #define testEquals(a, b) testEqualsLine(a, b,__LINE__)
+#define testToString(a, b) testToStringLine(a, b, __LINE__)
+#define testToArray(a, b, c) testToArrayLine(a, b, c, __LINE__)
 #define TESTS_PASSED (NUM_TESTS - TESTS_FAILED)
 
 int NUM_TESTS = 0;
 int TESTS_FAILED = 0;
+
+bool equalArrays(int *one, int *two, int size) {
+  for (int i = 0; i < size; i++)
+    if (one[i] != two[i]) return false;
+
+  return true;
+}
+
+char *arrayToString(int *arr, int size) {
+  char *str = calloc(MAX_LINE_LENGTH, sizeof(char));
+  strcat(str, "[");
+  for (int i = 0; i < size; i++) {
+    char elem[numDigits(arr[i] + 2)];
+    sprintf(elem, "%s%d%s", i == 0 ? "" : " ", arr[i], i < size - 1 ? "," : "");
+    strcat(str, elem);
+  }
+  strcat(str, "]");
+  return str;
+}
 
 bool testTrueLine(bool condition, int line) {
   NUM_TESTS++;
@@ -32,28 +53,27 @@ bool testEqualsLine(int one, int two, int line) {
  return testTrueLine(one == two, line); 
 }
 
-void testToString(ArrayList_t *list, char *expected) {
+void testToStringLine(ArrayList_t *list, char *expected, int line) {
   char *actual = arrayListToString(list);
-  if (!testTrue(!strcmp(actual, expected))) {
+  if (!testTrueLine(!strcmp(actual, expected), line)) {
     printf(ANSI_COLOR_GREEN"  Expected: %s\n"ANSI_COLOR_RESET, expected);
     printf(ANSI_COLOR_RED"  Actual:   %s\n"ANSI_COLOR_RESET, actual); 
   }
   free(actual);
 }
 
-bool equalArrays(int *one, int *two, int size) {
-  for (int i = 0; i < size; i++)
-    if (one[i] != two[i]) return false;
-
-  return true;
-}
-
-void printArray(int *arr, int size) {
-  printf("[");
-  for (int i = 0; i < size; i++) {
-    printf("%s%d%s", i == 0 ? "" : " ", arr[i], i < size - 1 ? "," : "");
+void testToArrayLine(ArrayList_t *list, int *expected, int size, int line) {
+  int *actual = arrayListToArray(list);
+  if (size != list->length || 
+      !testTrueLine(equalArrays(actual, expected, list->length), line)) {
+    char *expStr = arrayToString(expected, size);
+    char *actStr = arrayToString(actual, list->length);
+    printf(ANSI_COLOR_GREEN"  Expected: %s\n"ANSI_COLOR_RESET, expStr);
+    printf(ANSI_COLOR_RED"  Actual:   %s\n"ANSI_COLOR_RESET, actStr); 
+    free(expStr);
+    free(actStr);
   }
-  printf("]\n");
+  free(actual);
 }
 
 void removeAllTests(void) {
@@ -318,6 +338,7 @@ void diffTests() {
   testToString(oneDiffTwo, "[23, 86, 69, 99, 13]");
   testToString(twoDiffOne, "[88, 95, 9]");
   testTrue(equalArrayLists(list3, threeDiffFour));
+  testToArray(threeDiffFour, arr3, 4);
 
   freeArrayList(list1); 
   freeArrayList(list2); 
