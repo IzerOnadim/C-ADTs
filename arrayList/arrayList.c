@@ -399,6 +399,16 @@ bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two) {
   return isEmptyArrayList(copy);
 }
 
-//TODO: implement this.
-bool isSet_AL(const ArrayList_t *list);
+bool isSet_AL(const ArrayList_t *list) {
+  checkNullPointer(list);
+
+  //Change this to use a HashSet when written
+  ArrayList_t *noDup = nub_AL(list);
+  checkNullPointer(noDup);
+
+  bool set = noDup->length == list->length;
+  freeArrayList(noDup);
+  
+  return set; 
+}
 

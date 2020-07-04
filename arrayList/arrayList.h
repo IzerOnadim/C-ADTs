@@ -214,7 +214,6 @@ bool setEquality_AL(const ArrayList_t *one, const ArrayList_t *two);
  * Returns true if and only if the given ArrayList is a set, 
  * i.e. contains no duplicates.
  */
-//TODO: implement this.
 bool isSet_AL(const ArrayList_t *list);
 
 #endif
