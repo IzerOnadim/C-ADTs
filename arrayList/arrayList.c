@@ -362,8 +362,18 @@ ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two) 
   return list;
 } 
 
-//TODO: implement this.
-ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
+ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two) {
+  checkNullPointer(one); checkNullPointer(two);
+  
+  ArrayList_t *list = nub_AL(one);
+  if (!list) return NULL;
+
+  for (int i = 0; i < two->length; i++) {
+    removeElemArrayList(list, (two->array)[i]);
+  }
+
+  return list;
+}
 
 bool disjointArrayList(const ArrayList_t *one, const ArrayList_t *two) {
   checkNullPointer(one); checkNullPointer(two);

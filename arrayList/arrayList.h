@@ -196,7 +196,6 @@ ArrayList_t *intersectArrayList(const ArrayList_t *one, const ArrayList_t *two);
  * Returns a new ArrayList that is the set difference of ArrayList one and 
  * ArrayList two (one - two or one\two). Contains no duplicates.
  */
-//TODO: implement this.
 ArrayList_t *diffArrayList(const ArrayList_t *one, const ArrayList_t *two);
 
 /*
