@@ -310,6 +310,10 @@ bool ensureCapacityArrayList(ArrayList_t *list, int capacity) {
   return true;  
 }
 
+void sort_AL(ArrayList_t *list);
+
+ArrayList_t *sorted_AL(ArrayList_t *list);
+
 /*-------------------------Queue functions-----------------------------*/
 
 int dequeueArrayList(ArrayList_t *list) {

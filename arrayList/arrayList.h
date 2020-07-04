@@ -157,6 +157,17 @@ ArrayList_t *nub_AL(const ArrayList_t *list);
  */
 bool ensureCapacityArrayList(ArrayList_t *list, int capacity);
 
+/*
+ * Sorts given ArrayList in ascending order.
+ */
+void sort_AL(ArrayList_t *list);
+
+/*
+ * Returns sorted version of given list,
+ * does not change the given list in any way.
+ */
+ArrayList_t *sorted_AL(ArrayList_t *list);
+
 /*-------------------------Queue functions-----------------------------*/
 
 /*
