@@ -276,6 +276,7 @@ void setEqualityTests() {
   testTrue(!setEquality_AL(list2, list4));  
   testTrue(!setEquality_AL(list2, list5));  
 
+  //Tests to make sure the lists weren't modified.
   testToString(list1, "[1, 3, 4, 3, 7, 45, 23, 76, 231, 12, 11]");
   testToString(list2, "[76, 76, 3, 7, 231, 12, 12, 11, 45, 23, 1, 4, 23, 4]");
   testToString(list3, "[1, 2, 34, 52, 2]");
@@ -288,6 +289,50 @@ void setEqualityTests() {
   freeArrayList(list4);
   freeArrayList(list5);
 }
+
+void diffTests() {
+  int arr1[] = {23, 45, 12, 86, 45, 69, 3, 12, 86, 99, 100, 99, 13};
+  int arr2[] = {12, 100, 45, 3, 12, 3, 88, 95, 9};
+  int arr3[] = {20, 110, 300, 4};
+
+  ArrayList_t *list1 = initArrayList(arr1, 13);
+  ArrayList_t *list2 = initArrayList(arr2, 9);
+  ArrayList_t *list3 = initArrayList(arr3, 4);
+  ArrayList_t *list4 = createArrayList();
+
+  ArrayList_t *oneDiffOne = diffArrayList(list1, list1);
+  ArrayList_t *oneDiffTwo = diffArrayList(list1, list2);
+  ArrayList_t *oneDiffThree = diffArrayList(list1, list3);
+  ArrayList_t *oneDiffFour = diffArrayList(list1, list4);
+  ArrayList_t *twoDiffOne = diffArrayList(list2, list1);
+  ArrayList_t *twoDiffThree = diffArrayList(list2, list3);
+  ArrayList_t *threeDiffFour = diffArrayList(list3, list4);
+
+  ArrayList_t *nubOne = nub_AL(list1);
+  ArrayList_t *nubTwo = nub_AL(list2);
+
+  testTrue(isEmptyArrayList(oneDiffOne));
+  testTrue(equalArrayLists(nubOne, oneDiffThree));
+  testTrue(equalArrayLists(nubOne, oneDiffFour));
+  testTrue(equalArrayLists(nubTwo, twoDiffThree));
+  testToString(oneDiffTwo, "[23, 86, 69, 99, 13]");
+  testToString(twoDiffOne, "[88, 95, 9]");
+  testTrue(equalArrayLists(list3, threeDiffFour));
+
+  freeArrayList(list1); 
+  freeArrayList(list2); 
+  freeArrayList(list3); 
+  freeArrayList(list4);
+  freeArrayList(oneDiffOne);
+  freeArrayList(oneDiffTwo);
+  freeArrayList(oneDiffThree);
+  freeArrayList(oneDiffFour);
+  freeArrayList(twoDiffOne);
+  freeArrayList(twoDiffThree);
+  freeArrayList(threeDiffFour);
+  freeArrayList(nubOne);
+  freeArrayList(nubTwo);
+} 
 
 int main(void) {
 
@@ -563,6 +608,9 @@ int main(void) {
 
   printf("\n---------setEquality_AL tests------------------------\n\n");
   setEqualityTests();
+
+  printf("\n---------diffArrayList tests-------------------------\n\n");
+  diffTests();
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
