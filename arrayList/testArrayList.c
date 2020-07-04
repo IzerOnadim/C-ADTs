@@ -355,6 +355,38 @@ void diffTests() {
   freeArrayList(nubTwo);
 } 
 
+void isSetTests() {
+  int arr1[] = {23, 45, 90, 23, 44, 56, 67, 32, 90, 10};
+  int arr2[] = {23, 45, 90, 44, 56, 67, 32};
+  int arr3[] = {3, 32, 87, 99, 32};
+  int arr4[] = {3, 32, 87, 99};
+  int arr5[] = {0};
+
+  ArrayList_t *list1 = initArrayList(arr1, 10);
+  ArrayList_t *list2 = initArrayList(arr2, 7);
+  ArrayList_t *list3 = initArrayList(arr3, 5);
+  ArrayList_t *list4 = initArrayList(arr4, 4);
+  ArrayList_t *list5 = initArrayList(arr5, 1);
+  ArrayList_t *list6 = createArrayList();
+
+  testTrue(!isSet_AL(list1));
+  testTrue(isSet_AL(list2));
+  testTrue(!isSet_AL(list3));
+  testTrue(isSet_AL(list4));
+  testTrue(isSet_AL(list5));
+  testTrue(isSet_AL(list6));
+
+  //Make sure contents of lists are not modified
+  testToString(list1, "[23, 45, 90, 23, 44, 56, 67, 32, 90, 10]");
+
+  freeArrayList(list1);
+  freeArrayList(list2);
+  freeArrayList(list3);
+  freeArrayList(list4);
+  freeArrayList(list5);
+  freeArrayList(list6);
+}
+
 int main(void) {
 
   ArrayList_t *list = createArrayList();
@@ -632,6 +664,9 @@ int main(void) {
 
   printf("\n---------diffArrayList tests-------------------------\n\n");
   diffTests();
+
+  printf("\n---------isSet_AL tests------------------------------\n\n");
+  isSetTests();
 
   printf("\n-----------------------SUMMARY-----------------------\n");
   int n = numDigits(NUM_TESTS);
